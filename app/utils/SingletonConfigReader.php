@@ -2,19 +2,24 @@
 
 namespace Supalta\Cannelle\utils;
 
-use http\Exception;
-
 class SingletonConfigReader
 {
     private static SingletonConfigReader $instance;
 
     private $data = [];
 
+    /**
+     * Loads config.ini and keeps it in memory
+     */
     private function __construct() {
-        $fichierConfig = "../config.ini";
+        $fichierConfig = __DIR__ . "/../../config.ini";
         $this->data = parse_ini_file($fichierConfig, true);
     }
 
+    /**
+     * Allow to create an instance of SingletonConfigReader out of this file
+     * @return SingletonConfigReader
+     */
     public static function getInstance(): SingletonConfigReader{
         if(!isset(self::$instance)) {
             self::$instance = new SingletonConfigReader();
