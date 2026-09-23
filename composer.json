@@ -12,6 +12,10 @@
         {
             "name": "Jules Bernier",
             "email": "j.bernier@eleve.leschartreux.net"
+        },
+        {
+            "name": "Alexis Kuntz",
+            "email": "a.kuntz@eleve.leschartreux.net"
         }
     ],
     "config": {
