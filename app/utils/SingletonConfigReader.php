@@ -6,7 +6,7 @@ class SingletonConfigReader
 {
     private static SingletonConfigReader $instance;
 
-    private $data = [];
+    private array $data;
 
     /**
      * Loads config.ini and keeps it in memory
@@ -32,13 +32,22 @@ class SingletonConfigReader
      * @param string $key
      * @param string|null $section
      * @return string|null
+     * @throws \Exception
      */
     public function getValue(string $key, ?string $section = null): ?string {
-        if(is_null($section)){
-            throw new \Exception("la section est vide");
+        if (is_null($section)){
+            if (array_key_exists($key, $this->data)){
+                return $this->data[$key];
+            }
+            throw new \Exception("La clé '$key' n'existe pas !");
         }
-        return $this->data[$section][$key];
+        if (!array_key_exists($section, $this->data)){
+            throw new \Exception("La section '$section' n'existe pas !");
+        }
+        if (array_key_exists($key, $this->data[$section])){
+            return $this->data[$section][$key];
+        }
+        throw new \Exception("La clé '$key' n'existe pas dans la section '$section' !");
     }
-
 
 }
