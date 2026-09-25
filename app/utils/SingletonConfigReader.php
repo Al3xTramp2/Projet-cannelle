@@ -5,15 +5,22 @@ namespace Supalta\Cannelle\utils;
 class SingletonConfigReader
 {
     private static SingletonConfigReader $instance;
-
     private array $data;
 
     /**
-     * Loads config.ini and keeps it in memory
+     * Constructor of the SingletonConfigReader class
+     * @throws \Exception
      */
     private function __construct() {
-        $fichierConfig = __DIR__ . "/../../config.ini";
-        $this->data = parse_ini_file($fichierConfig, true);
+        $path = __DIR__ . "/../../config.ini";
+        if (file_exists($path)) {
+            $this->data = parse_ini_file($path, true);
+            if ($this->data === false) {
+                throw new \Exception("Impossible d'analyser le fichier '$path' !");
+            }
+        } else {
+            throw new \Exception("Le fichier de configuration n'existe pas !");
+        }
     }
 
     /**
