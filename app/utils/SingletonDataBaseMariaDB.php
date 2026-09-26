@@ -2,6 +2,9 @@
 
 namespace Supalta\Cannelle\utils;
 
+use PDO;
+use Exception;
+
 class SingletonDataBaseMariaDB
 {
     private \PDO $pdo;
@@ -9,7 +12,7 @@ class SingletonDataBaseMariaDB
 
     /**
      * Constructor of the SingletonDataBaseMariaDB class
-     * @throws \Exception If arg "section" is wrong
+     * @throws Exception
      */
     private function __construct() {
         $config = SingletonConfigReader::getInstance();
@@ -34,9 +37,9 @@ class SingletonDataBaseMariaDB
 
     /**
      * Return the PDO object
-     * @return \PDO
+     * @return PDO
      */
-    public function getPDO() : \PDO {
+    public function getPDO() : PDO {
         return $this->pdo;
     }
 

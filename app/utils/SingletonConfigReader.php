@@ -2,6 +2,8 @@
 
 namespace Supalta\Cannelle\utils;
 
+use Exception;
+
 class SingletonConfigReader
 {
     private static SingletonConfigReader $instance;
@@ -9,17 +11,17 @@ class SingletonConfigReader
 
     /**
      * Constructor of the SingletonConfigReader class
-     * @throws \Exception
+     * @throws Exception
      */
     private function __construct() {
         $path = __DIR__ . "/../../config.ini";
         if (file_exists($path)) {
             $this->data = parse_ini_file($path, true);
             if ($this->data === false) {
-                throw new \Exception("Impossible d'analyser le fichier '$path' !");
+                throw new Exception("Impossible d'analyser le fichier '$path' !");
             }
         } else {
-            throw new \Exception("Le fichier de configuration n'existe pas !");
+            throw new Exception("Le fichier de configuration n'existe pas !");
         }
     }
 
@@ -39,22 +41,22 @@ class SingletonConfigReader
      * @param string $key
      * @param string|null $section
      * @return string|null
-     * @throws \Exception
+     * @throws Exception
      */
     public function getValue(string $key, ?string $section = null): ?string {
         if (is_null($section)){
             if (array_key_exists($key, $this->data)){
                 return $this->data[$key];
             }
-            throw new \Exception("La clé '$key' n'existe pas !");
+            throw new Exception("La clé '$key' n'existe pas !");
         }
         if (!array_key_exists($section, $this->data)){
-            throw new \Exception("La section '$section' n'existe pas !");
+            throw new Exception("La section '$section' n'existe pas !");
         }
         if (array_key_exists($key, $this->data[$section])){
             return $this->data[$section][$key];
         }
-        throw new \Exception("La clé '$key' n'existe pas dans la section '$section' !");
+        throw new Exception("La clé '$key' n'existe pas dans la section '$section' !");
     }
 
 }
