@@ -2,15 +2,18 @@
 
 namespace Supalta\Cannelle\model;
 
+use Exception;
 use PDO;
+use DateTime;
 
-class DAOPompiers extends DAO
+class DAOPompier extends DAO
 {
-    private \PDO $pdo;
+    private PDO $pdo;
 
     /**
      * Generate a unique key for the Pompier entity
      * @return string
+     * @throws Exception
      */
     private function keyGenerator(): string {
         $sql = "SELECT Matricule FROM pompiers ORDER BY Matricule DESC LIMIT 1;";
@@ -21,17 +24,20 @@ class DAOPompiers extends DAO
         }
 
         $number = (int)substr($last, -5);
-        $number = $number + 1;
+        ++$number;
         $zLeft = 5 - mb_strlen($number);
 
         if ($zLeft < 0) {
-            throw new \Exception("La limite de matricule a été atteinte !");
+            throw new Exception("La limite de matricule a été atteinte !");
         }
 
         return "Ma" . str_repeat("0", $zLeft) . $number;
     }
 
-    public function __construct( \PDO $pdo) {
+    /**
+     * @param PDO $pdo
+     */
+    public function __construct( PDO $pdo) {
         parent::__construct();
         $this->pdo = $pdo;
     }
@@ -40,6 +46,7 @@ class DAOPompiers extends DAO
      * Return an entity Pompier according to the key $id
      * @param string $matricule
      * @return Pompier|null
+     * @throws Exception
      */
     public function find(string $matricule): ?Pompier {
         $sql = "SELECT * FROM pompiers WHERE Matricule = :Matricule";
@@ -47,15 +54,27 @@ class DAOPompiers extends DAO
         $preparedStatement = $this->pdo->prepare($sql);
         $preparedStatement -> bindValue("Matricule", $matricule, PDO::PARAM_STR);
         $preparedStatement->execute();
-        $pompier = $preparedStatement->fetchObject(Pompier::class);
-
-        return $pompier ?: null;
+        $line = $preparedStatement->fetch(PDO::FETCH_ASSOC);
+        if ($line !== false) {
+            $pompier = new Pompier();
+            $pompier->setMatricule($line['Matricule']);
+            $pompier->setPrenom($line['Prenom']);
+            $pompier->setNom($line['Nom']);
+            $pompier->setChefAgret($line['ChefAgret']);
+            $pompier->setDateNaissance(new DateTime($line['DateNaissance']));
+            $pompier->setNumCaserne($line['NumCaserne']);
+            $pompier->setCodeGrade($line['CodeGrade']);
+            $pompier->setMatriculeRespo($line['MatriculeRespo']);
+            return $pompier;
+        }
+        return null;
     }
 
     /**
      * Save a Pompier entity
      * @param Pompier $pompier
      * @return bool
+     * @throws Exception
      */
     public function save(Pompier $pompier) : bool {
         $pompier->setMatricule($this->keyGenerator());
@@ -67,7 +86,7 @@ class DAOPompiers extends DAO
         $preparedStatement->bindValue("Prenom", $pompier->getPrenom(), PDO::PARAM_STR);
         $preparedStatement->bindValue("Nom", $pompier->getNom(), PDO::PARAM_STR);
         $preparedStatement->bindValue("ChefAgret", $pompier->getChefAgret(), PDO::PARAM_STR);
-        $preparedStatement->bindValue("DateNaissance", $pompier->getDateNaissance(), PDO::PARAM_STR);
+        $preparedStatement->bindValue("DateNaissance", $pompier->getDateNaissance()->format("Y-m-d"), PDO::PARAM_STR);
         $preparedStatement->bindValue("NumCaserne", $pompier->getNumCaserne(), PDO::PARAM_INT);
         $preparedStatement->bindValue("CodeGrade", $pompier->getCodeGrade(), PDO::PARAM_STR);
         $preparedStatement->bindValue("MatriculeRespo", $pompier->getMatriculeRespo(), PDO::PARAM_STR);
@@ -79,10 +98,11 @@ class DAOPompiers extends DAO
      * Update the Pompier entity
      * @param Pompier $pompier
      * @return bool
+     * @throws Exception
      */
     public function update(Pompier $pompier) : bool {
         if ($this->find($pompier->getMatricule()) === null) {
-            throw new \Exception("Le pompier " . $pompier->getMatricule() . " n'existe pas !");
+            throw new Exception("Le pompier " . $pompier->getMatricule() . " n'existe pas !");
         }
 
         $sql = "UPDATE pompiers SET Prenom = :Prenom, Nom = :Nom, ChefAgret = :ChefAgret, DateNaissance = :DateNaissance, NumCaserne = :NumCaserne, CodeGrade = :CodeGrade, MatriculeRespo = :MatriculeRespo WHERE Matricule = :Matricule";
@@ -92,7 +112,7 @@ class DAOPompiers extends DAO
         $preparedStatement->bindValue("Prenom", $pompier->getPrenom(), PDO::PARAM_STR);
         $preparedStatement->bindValue("Nom", $pompier->getNom(), PDO::PARAM_STR);
         $preparedStatement->bindValue("ChefAgret", $pompier->getChefAgret(), PDO::PARAM_STR);
-        $preparedStatement->bindValue("DateNaissance", $pompier->getDateNaissance(), PDO::PARAM_STR);
+        $preparedStatement->bindValue("DateNaissance", $pompier->getDateNaissance()->format("Y-m-d"), PDO::PARAM_STR);
         $preparedStatement->bindValue("NumCaserne", $pompier->getNumCaserne(), PDO::PARAM_INT);
         $preparedStatement->bindValue("CodeGrade", $pompier->getCodeGrade(), PDO::PARAM_STR);
         $preparedStatement->bindValue("MatriculeRespo", $pompier->getMatriculeRespo(), PDO::PARAM_STR);
@@ -104,8 +124,13 @@ class DAOPompiers extends DAO
      * Delete the Pompier entity
      * @param Pompier $pompier
      * @return bool
+     * @throws Exception
      */
     public function delete(Pompier $pompier) : bool {
+        if ($this->find($pompier->getMatricule()) === null) {
+            throw new Exception("Le pompier " . $pompier->getMatricule() . " n'existe pas !");
+        }
+
         $sql = "DELETE FROM pompiers WHERE Matricule = :Matricule";
 
         $preparedStatement = $this->pdo->prepare($sql);
@@ -120,6 +145,7 @@ class DAOPompiers extends DAO
      * @param int $offset
      * @param int $limit
      * @return array
+     * @throws Exception
      */
     public function findAll(int $offset = 0, int $limit = 100): array {
         $sql = "SELECT * FROM pompiers ORDER BY Matricule LIMIT :offset, :limit";
@@ -129,7 +155,19 @@ class DAOPompiers extends DAO
         $preparedStatement->bindValue("limit", $limit, PDO::PARAM_INT);
         $preparedStatement->execute();
 
-        $pompierList = $preparedStatement->fetchAll(PDO::FETCH_CLASS, Pompier::class);
+        $pompierList = [];
+        foreach ($preparedStatement->fetchAll(PDO::FETCH_ASSOC) as $line) {
+            $pompier = new Pompier();
+            $pompier->setMatricule($line['Matricule']);
+            $pompier->setPrenom($line['Prenom']);
+            $pompier->setNom($line['Nom']);
+            $pompier->setChefAgret($line['ChefAgret']);
+            $pompier->setDateNaissance(new DateTime($line['DateNaissance']));
+            $pompier->setNumCaserne((int) $line['NumCaserne']);
+            $pompier->setCodeGrade($line['CodeGrade']);
+            $pompier->setMatriculeRespo($line['MatriculeRespo']);
+            $pompierList[] = $pompier;
+        }
         return $pompierList;
     }
 
@@ -148,6 +186,7 @@ class DAOPompiers extends DAO
      * Return all the Pompier entities with a name
      * @param string $name
      * @return array
+     * @throws Exception
      */
     public function findByName(string $name): array {
         $sql = "SELECT * FROM pompiers WHERE Nom = :Name";
@@ -156,7 +195,19 @@ class DAOPompiers extends DAO
         $preparedStatement->bindValue("Name", $name, PDO::PARAM_STR);
         $preparedStatement->execute();
 
-        $pompierList = $preparedStatement->fetchAll(PDO::FETCH_CLASS, Pompier::class);
+        $pompierList = [];
+        foreach ($preparedStatement->fetchAll(PDO::FETCH_ASSOC) as $line) {
+            $pompier = new Pompier();
+            $pompier->setMatricule($line['Matricule']);
+            $pompier->setPrenom($line['Prenom']);
+            $pompier->setNom($line['Nom']);
+            $pompier->setChefAgret($line['ChefAgret']);
+            $pompier->setDateNaissance(new DateTime($line['DateNaissance']));
+            $pompier->setNumCaserne((int) $line['NumCaserne']);
+            $pompier->setCodeGrade($line['CodeGrade']);
+            $pompier->setMatriculeRespo($line['MatriculeRespo']);
+            $pompierList[] = $pompier;
+        }
         return $pompierList;
     }
 
