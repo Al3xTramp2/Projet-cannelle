@@ -188,7 +188,7 @@ class Pompier extends \stdClass {
      */
     public function setMatriculeRespo(string $MatriculeRespo): Pompier {
         if (mb_strlen($MatriculeRespo) !== 7) {
-            throw new Exception("Le matricule doit contenir exactement 7 caractères !");
+            throw new Exception("Le matricule  doit contenir exactement 7 caractères !");
         }
         if (!str_starts_with($MatriculeRespo, "Ma")) {
             throw new Exception("Le matricule doit commencer par 'Ma' !");
