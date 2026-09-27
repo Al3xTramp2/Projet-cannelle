@@ -36,7 +36,7 @@ class Pompier extends \stdClass {
         if (mb_strlen($Matricule) !== 7) {
             throw new Exception("Le matricule doit contenir exactement 7 caractères !");
         }
-        if (substr($Matricule, 0, 2) !== "Ma") {
+        if (!str_starts_with($Matricule, "Ma")) {
             throw new Exception("Le matricule doit commencer par 'Ma' !");
         }
         if (!ctype_digit(substr($Matricule, -5))) {
@@ -106,7 +106,7 @@ class Pompier extends \stdClass {
      */
     public function setChefAgret(string $ChefAgret): Pompier {
         if (!in_array($ChefAgret, ["O", "N"])) {
-            throw new Exception("Le chef d'agrément doit être 'O' ou 'N' !");
+            throw new Exception("Le chef d'agrès doit être 'O' ou 'N' !");
         }
         $this->ChefAgret = $ChefAgret;
         return $this;
@@ -188,13 +188,13 @@ class Pompier extends \stdClass {
      */
     public function setMatriculeRespo(string $MatriculeRespo): Pompier {
         if (mb_strlen($MatriculeRespo) !== 7) {
-            throw new Exception("Le matricule  doit contenir exactement 7 caractères !");
+            throw new Exception("Le matricule du responsable doit contenir exactement 7 caractères !");
         }
         if (!str_starts_with($MatriculeRespo, "Ma")) {
-            throw new Exception("Le matricule doit commencer par 'Ma' !");
+            throw new Exception("Le matricule du responsable doit commencer par 'Ma' !");
         }
         if (!ctype_digit(substr($MatriculeRespo, -5))) {
-            throw new Exception("Les 5 derniers caractères du matricule doivent être des chiffres !");
+            throw new Exception("Les 5 derniers caractères du matricule du responsable doivent être des chiffres !");
         }
         $this->MatriculeRespo = $MatriculeRespo;
         return $this;

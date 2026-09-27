@@ -2,12 +2,12 @@
 
 namespace Supalta\Cannelle\model;
 
+use DateTime;
 use Exception;
 use PDO;
-use DateTime;
 
-class DAOPompier extends DAO
-{
+class DAOPompier extends DAO {
+
     private PDO $pdo;
 
     /**
@@ -23,7 +23,7 @@ class DAOPompier extends DAO
             return "Ma00001";
         }
 
-        $number = (int)substr($last, -5);
+        $number = substr($last, -5);
         ++$number;
         $zLeft = 5 - mb_strlen($number);
 
@@ -163,7 +163,7 @@ class DAOPompier extends DAO
             $pompier->setNom($line['Nom']);
             $pompier->setChefAgret($line['ChefAgret']);
             $pompier->setDateNaissance(new DateTime($line['DateNaissance']));
-            $pompier->setNumCaserne((int) $line['NumCaserne']);
+            $pompier->setNumCaserne($line['NumCaserne']);
             $pompier->setCodeGrade($line['CodeGrade']);
             $pompier->setMatriculeRespo($line['MatriculeRespo']);
             $pompierList[] = $pompier;
@@ -179,7 +179,7 @@ class DAOPompier extends DAO
 
         $count = $this->pdo->query($sql)->fetchColumn();
 
-        return (int)$count;
+        return (int) $count;
     }
 
     /**
@@ -203,7 +203,7 @@ class DAOPompier extends DAO
             $pompier->setNom($line['Nom']);
             $pompier->setChefAgret($line['ChefAgret']);
             $pompier->setDateNaissance(new DateTime($line['DateNaissance']));
-            $pompier->setNumCaserne((int) $line['NumCaserne']);
+            $pompier->setNumCaserne($line['NumCaserne']);
             $pompier->setCodeGrade($line['CodeGrade']);
             $pompier->setMatriculeRespo($line['MatriculeRespo']);
             $pompierList[] = $pompier;

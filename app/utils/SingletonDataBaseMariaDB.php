@@ -2,8 +2,8 @@
 
 namespace Supalta\Cannelle\utils;
 
-use PDO;
 use Exception;
+use PDO;
 
 class SingletonDataBaseMariaDB
 {
