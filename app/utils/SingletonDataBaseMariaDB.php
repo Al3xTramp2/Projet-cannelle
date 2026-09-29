@@ -5,9 +5,9 @@ namespace Supalta\Cannelle\utils;
 use Exception;
 use PDO;
 
-class SingletonDataBaseMariaDB
-{
-    private \PDO $pdo;
+class SingletonDataBaseMariaDB {
+
+    private PDO $pdo;
     private static ?SingletonDataBaseMariaDB $instance = null ;
 
     /**
@@ -17,7 +17,7 @@ class SingletonDataBaseMariaDB
     private function __construct() {
         $config = SingletonConfigReader::getInstance();
 
-        $this->pdo = new \PDO(
+        $this->pdo = new PDO(
             $config->getValue("dsn","mariaDb"),
             $config->getValue("username","mariaDb"),
             $config->getValue("password","mariaDb")
