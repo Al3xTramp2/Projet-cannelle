@@ -8,6 +8,7 @@ use PDO;
 class SingletonDataBaseMariaDB {
 
     private PDO $pdo;
+    private LoggedPDO $loggedPdo;
     private static ?SingletonDataBaseMariaDB $instance = null ;
 
     /**
@@ -18,6 +19,12 @@ class SingletonDataBaseMariaDB {
         $config = SingletonConfigReader::getInstance();
 
         $this->pdo = new PDO(
+            $config->getValue("dsn","mariaDb"),
+            $config->getValue("username","mariaDb"),
+            $config->getValue("password","mariaDb")
+        );
+
+        $this->loggedPdo = new LoggedPDO(
             $config->getValue("dsn","mariaDb"),
             $config->getValue("username","mariaDb"),
             $config->getValue("password","mariaDb")
@@ -43,8 +50,8 @@ class SingletonDataBaseMariaDB {
         return $this->pdo;
     }
 
-//    public function getLoggedPDO(): \PDO { //TODO : Write LoggedPDO Class
-//
-//    }
+    public function getLoggedPDO() : PDO {
+        return $this->loggedPdo;
+    }
 
 }

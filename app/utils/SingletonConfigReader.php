@@ -4,8 +4,8 @@ namespace Supalta\Cannelle\utils;
 
 use Exception;
 
-class SingletonConfigReader
-{
+class SingletonConfigReader {
+
     private static SingletonConfigReader $instance;
     private array $data;
 

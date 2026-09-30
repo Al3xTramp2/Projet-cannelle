@@ -16,12 +16,12 @@ class SingletonLogger {
 
     private array $SQLLoggerConfig = [
         "path" => __DIR__ . "/../../storage/logs/sql.log",
-        "level" => "WARNING"
+        "level" => "Info"
     ];
 
     private array $AccessLoggerConfig = [
         "path" => __DIR__ . "/../../storage/logs/access.log",
-        "level" => "INFO"
+        "level" => "Warning"
     ];
 
     /**
@@ -85,7 +85,5 @@ class SingletonLogger {
     public function getAccessLogger() : Logger {
         return $this->accessLogger;
     }
-
-
 
 }
