@@ -7,8 +7,8 @@ use PDO;
 use PDOStatement;
 use Monolog\Logger;
 
-class LoggedPDOStatement extends PDOStatement {
-
+class LoggedPDOStatement extends PDOStatement
+{
     private PDOStatement $statement;
     private Logger $logger;
     private string $user;
@@ -18,7 +18,8 @@ class LoggedPDOStatement extends PDOStatement {
      * @param Logger $logger
      * @param string $user
      */
-    public function __construct(PDOStatement $statement, Logger $logger, string $user) {
+    public function __construct(PDOStatement $statement, Logger $logger, string $user)
+    {
         $this->statement = $statement;
         $this->user = $user;
         $this->logger = $logger;
@@ -27,7 +28,8 @@ class LoggedPDOStatement extends PDOStatement {
     /**
      * @return void
      */
-    private function log_Statement() : void {
+    private function logStatement(): void
+    {
         ob_start();
         $this->statement->debugDumpParams();
         $message = ob_get_clean();
@@ -47,14 +49,15 @@ class LoggedPDOStatement extends PDOStatement {
      * @return bool
      * @throws Exception
      */
-    public function execute($params = null): bool {
+    public function execute($params = null): bool
+    {
         try {
             $result = $this->statement->execute($params);
         } catch (Exception $e) {
-            $this->log_Statement();
+            $this->logStatement();
             throw $e;
         }
-        $this->log_Statement();
+        $this->logStatement();
         return $result;
     }
 
@@ -64,7 +67,8 @@ class LoggedPDOStatement extends PDOStatement {
      * @param int $type
      * @return bool
      */
-    public function bindValue(int|string $param, mixed $value, int $type = PDO::PARAM_STR): bool {
+    public function bindValue(int|string $param, mixed $value, int $type = PDO::PARAM_STR): bool
+    {
         return $this->statement->bindValue($param, $value, $type);
     }
 
@@ -73,7 +77,8 @@ class LoggedPDOStatement extends PDOStatement {
      * @param ...$args
      * @return array
      */
-    public function fetchAll(int $mode = PDO::FETCH_DEFAULT, ...$args): array {
+    public function fetchAll(int $mode = PDO::FETCH_DEFAULT, ...$args): array
+    {
         return $this->statement->fetchAll($mode, ...$args);
     }
 
@@ -83,7 +88,8 @@ class LoggedPDOStatement extends PDOStatement {
      * @param int $cursorOffset
      * @return mixed
      */
-    public function fetch(int $mode = PDO::FETCH_DEFAULT, int $cursorOrientation = PDO::FETCH_ORI_NEXT, int $cursorOffset = 0): mixed {
+    public function fetch(int $mode = PDO::FETCH_DEFAULT, int $cursorOrientation = PDO::FETCH_ORI_NEXT, int $cursorOffset = 0): mixed
+    {
         return $this->statement->fetch($mode, $cursorOrientation, $cursorOffset);
     }
 
@@ -92,7 +98,8 @@ class LoggedPDOStatement extends PDOStatement {
      * @param array $constructorArgs
      * @return object|false
      */
-    public function fetchObject(?string $class = "stdClass", array $constructorArgs = []): object|false {
+    public function fetchObject(?string $class = "stdClass", array $constructorArgs = []): object|false
+    {
         return $this->statement->fetchObject($class, $constructorArgs);
     }
 
@@ -101,8 +108,8 @@ class LoggedPDOStatement extends PDOStatement {
      * @param ...$args
      * @return bool
      */
-    public function setFetchMode($mode = PDO::FETCH_DEFAULT, ...$args): bool {
+    public function setFetchMode($mode = PDO::FETCH_DEFAULT, ...$args): bool
+    {
         return $this->statement->setFetchMode($mode, ...$args);
     }
-
 }

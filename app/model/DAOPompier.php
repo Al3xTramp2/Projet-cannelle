@@ -6,8 +6,8 @@ use DateTime;
 use Exception;
 use PDO;
 
-class DAOPompier extends DAO {
-
+class DAOPompier extends DAO
+{
     private PDO $pdo;
 
     /**
@@ -15,7 +15,8 @@ class DAOPompier extends DAO {
      * @return string
      * @throws Exception
      */
-    private function keyGenerator(): string {
+    private function keyGenerator(): string
+    {
         $sql = "SELECT Matricule FROM pompiers ORDER BY Matricule DESC LIMIT 1;";
         $last = $this->pdo->query($sql)->fetchColumn();
 
@@ -37,7 +38,8 @@ class DAOPompier extends DAO {
     /**
      * @param PDO $pdo
      */
-    public function __construct( PDO $pdo) {
+    public function __construct(PDO $pdo)
+    {
         parent::__construct();
         $this->pdo = $pdo;
     }
@@ -48,7 +50,8 @@ class DAOPompier extends DAO {
      * @return Pompier|null
      * @throws Exception
      */
-    public function find(string $matricule): ?Pompier {
+    public function find(string $matricule): ?Pompier
+    {
         $sql = "SELECT * FROM pompiers WHERE Matricule = :Matricule";
 
         $preparedStatement = $this->pdo->prepare($sql);
@@ -76,10 +79,13 @@ class DAOPompier extends DAO {
      * @return bool
      * @throws Exception
      */
-    public function save(Pompier $pompier) : bool {
+    public function save(Pompier $pompier): bool
+    {
         $pompier->setMatricule($this->keyGenerator());
 
-        $sql = "INSERT INTO pompiers (Matricule, Prenom, Nom, ChefAgret, DateNaissance, NumCaserne, CodeGrade, MatriculeRespo) VALUES (:Matricule, :Prenom, :Nom, :ChefAgret, :DateNaissance, :NumCaserne, :CodeGrade, :MatriculeRespo)";
+        $sql = "INSERT INTO pompiers (Matricule, Prenom, Nom, ChefAgret, DateNaissance, NumCaserne, CodeGrade,"
+                . " MatriculeRespo) VALUES (:Matricule, :Prenom, :Nom, :ChefAgret, :DateNaissance, :NumCaserne,"
+                . " :CodeGrade, :MatriculeRespo)";
 
         $preparedStatement = $this->pdo->prepare($sql);
         $preparedStatement->bindValue("Matricule", $pompier->getMatricule(), PDO::PARAM_STR);
@@ -100,12 +106,15 @@ class DAOPompier extends DAO {
      * @return bool
      * @throws Exception
      */
-    public function update(Pompier $pompier) : bool {
+    public function update(Pompier $pompier): bool
+    {
         if ($this->find($pompier->getMatricule()) === null) {
             throw new Exception("Le pompier " . $pompier->getMatricule() . " n'existe pas !");
         }
 
-        $sql = "UPDATE pompiers SET Prenom = :Prenom, Nom = :Nom, ChefAgret = :ChefAgret, DateNaissance = :DateNaissance, NumCaserne = :NumCaserne, CodeGrade = :CodeGrade, MatriculeRespo = :MatriculeRespo WHERE Matricule = :Matricule";
+        $sql = "UPDATE pompiers SET Prenom = :Prenom, Nom = :Nom, ChefAgret = :ChefAgret,"
+                . " DateNaissance = :DateNaissance, NumCaserne = :NumCaserne, CodeGrade = :CodeGrade,"
+                . " MatriculeRespo = :MatriculeRespo WHERE Matricule = :Matricule";
 
         $preparedStatement = $this->pdo->prepare($sql);
         $preparedStatement->bindValue("Matricule", $pompier->getMatricule(), PDO::PARAM_STR);
@@ -126,7 +135,8 @@ class DAOPompier extends DAO {
      * @return bool
      * @throws Exception
      */
-    public function delete(Pompier $pompier) : bool {
+    public function delete(Pompier $pompier): bool
+    {
         if ($this->find($pompier->getMatricule()) === null) {
             throw new Exception("Le pompier " . $pompier->getMatricule() . " n'existe pas !");
         }
@@ -147,7 +157,8 @@ class DAOPompier extends DAO {
      * @return array
      * @throws Exception
      */
-    public function findAll(int $offset = 0, int $limit = 100): array {
+    public function findAll(int $offset = 0, int $limit = 100): array
+    {
         $sql = "SELECT * FROM pompiers ORDER BY Matricule LIMIT :offset, :limit";
 
         $preparedStatement = $this->pdo->prepare($sql);
@@ -174,7 +185,8 @@ class DAOPompier extends DAO {
     /**
      * @return int
      */
-    public function count(): int {
+    public function count(): int
+    {
         $sql = "SELECT COUNT(*) FROM pompiers";
 
         $count = $this->pdo->query($sql)->fetchColumn();
@@ -188,7 +200,8 @@ class DAOPompier extends DAO {
      * @return array
      * @throws Exception
      */
-    public function findByName(string $name): array {
+    public function findByName(string $name): array
+    {
         $sql = "SELECT * FROM pompiers WHERE Nom = :Name";
 
         $preparedStatement = $this->pdo->prepare($sql);
@@ -210,5 +223,4 @@ class DAOPompier extends DAO {
         }
         return $pompierList;
     }
-
 }

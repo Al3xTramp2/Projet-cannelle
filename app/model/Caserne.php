@@ -8,8 +8,8 @@ use Exception;
  * Class Caserne
  * @package Supalta\Cannelle\model
  */
-class Caserne extends \stdClass{
-
+class Caserne extends \stdClass
+{
     private int $NumCaserne;
     private string $Adresse;
     private string $CP;
@@ -19,7 +19,8 @@ class Caserne extends \stdClass{
     /**
      * @return int
      */
-    public function getNumCaserne(): int {
+    public function getNumCaserne(): int
+    {
         return $this->NumCaserne;
     }
 
@@ -28,7 +29,8 @@ class Caserne extends \stdClass{
      * @return $this
      * @throws Exception
      */
-    public function setNumCaserne(int $NumCaserne): Caserne {
+    public function setNumCaserne(int $NumCaserne): Caserne
+    {
         if ($NumCaserne <= 0) {
             throw new Exception("Le numéro de caserne doit être positif !");
         }
@@ -39,7 +41,8 @@ class Caserne extends \stdClass{
     /**
      * @return string
      */
-    public function getAdresse(): string {
+    public function getAdresse(): string
+    {
         return $this->Adresse;
     }
 
@@ -48,7 +51,8 @@ class Caserne extends \stdClass{
      * @return $this
      * @throws Exception
      */
-    public function setAdresse(string $Adresse): Caserne {
+    public function setAdresse(string $Adresse): Caserne
+    {
         if ($Adresse === "") {
             throw new Exception("L'adresse ne peut pas être vide !");
         }
@@ -62,7 +66,8 @@ class Caserne extends \stdClass{
     /**
      * @return string
      */
-    public function getCP(): string {
+    public function getCP(): string
+    {
         return $this->CP;
     }
 
@@ -71,7 +76,8 @@ class Caserne extends \stdClass{
      * @return $this
      * @throws Exception
      */
-    public function setCP(string $CP): Caserne {
+    public function setCP(string $CP): Caserne
+    {
         if (mb_strlen($CP) !== 5 || !ctype_digit($CP)) {
             throw new Exception("Le code postal doit contenir exactement 5 chiffres !");
         }
@@ -82,7 +88,8 @@ class Caserne extends \stdClass{
     /**
      * @return string
      */
-    public function getVille(): string {
+    public function getVille(): string
+    {
         return $this->Ville;
     }
 
@@ -91,7 +98,8 @@ class Caserne extends \stdClass{
      * @return $this
      * @throws Exception
      */
-    public function setVille(string $Ville): Caserne {
+    public function setVille(string $Ville): Caserne
+    {
         if ($Ville === "") {
             throw new Exception("Le nom de la ville ne peut pas être vide !");
         }
@@ -105,7 +113,8 @@ class Caserne extends \stdClass{
     /**
      * @return int
      */
-    public function getCodeTypeC(): int {
+    public function getCodeTypeC(): int
+    {
         return $this->CodeTypeC;
     }
 
@@ -114,12 +123,12 @@ class Caserne extends \stdClass{
      * @return $this
      * @throws Exception
      */
-    public function setCodeTypeC(int $CodeTypeC): Caserne {
+    public function setCodeTypeC(int $CodeTypeC): Caserne
+    {
         if (!in_array($CodeTypeC, [1, 2, 3])) {
             throw new Exception("Le code de type de caserne doit être '1', '2' ou '3' !");
         }
         $this->CodeTypeC = $CodeTypeC;
         return $this;
     }
-
 }

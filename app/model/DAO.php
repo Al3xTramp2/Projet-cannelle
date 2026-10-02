@@ -4,9 +4,9 @@ namespace Supalta\Cannelle\model;
 
 class DAO
 {
-
-    public function __construct(){}
+    public function __construct()
+    {
+    }
 
     //TODO  Autres methodes ?
-
 }

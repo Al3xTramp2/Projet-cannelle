@@ -8,8 +8,8 @@ use Monolog\Level;
 use Monolog\Logger;
 use Monolog\Processor\WebProcessor;
 
-class SingletonLogger {
-
+class SingletonLogger
+{
     private ?Logger $sqlLogger = null;
     private ?Logger $accessLogger = null;
     private static ?SingletonLogger $instance = null;
@@ -27,17 +27,18 @@ class SingletonLogger {
     /**
      * @throws Exception
      */
-    private function __construct() {
+    private function __construct()
+    {
         $config = SingletonConfigReader::getInstance();
 
         try {
-            $sqlPath = $config->getValue("path","SQLLogger");
+            $sqlPath = $config->getValue("path", "SQLLogger");
         } catch (Exception) {
             $sqlPath = $this->SQLLoggerConfig["path"];
         }
 
         try {
-            $sqlLevel = Level::fromName($config->getValue("level","SQLLogger"));
+            $sqlLevel = Level::fromName($config->getValue("level", "SQLLogger"));
         } catch (Exception) {
             $sqlLevel = Level::fromName($this->SQLLoggerConfig["level"]);
         }
@@ -46,13 +47,13 @@ class SingletonLogger {
         $this->sqlLogger->pushHandler(new StreamHandler($sqlPath, $sqlLevel));
 
         try {
-            $accessPath = $config->getValue("path","AccessLogger");
+            $accessPath = $config->getValue("path", "AccessLogger");
         } catch (Exception) {
             $accessPath = $this->AccessLoggerConfig["path"];
         }
 
         try {
-            $accessLevel = Level::fromName($config->getValue("level","AccessLogger"));
+            $accessLevel = Level::fromName($config->getValue("level", "AccessLogger"));
         } catch (Exception) {
             $accessLevel = Level::fromName($this->AccessLoggerConfig["level"]);
         }
@@ -65,7 +66,8 @@ class SingletonLogger {
     /**
      * @return SingletonLogger
      */
-    public static function getInstance() : SingletonLogger {
+    public static function getInstance(): SingletonLogger
+    {
         if (is_null(self::$instance)) {
             self::$instance = new SingletonLogger();
         }
@@ -75,15 +77,16 @@ class SingletonLogger {
     /**
      * @return Logger
      */
-    public function getSQLLogger() : Logger {
+    public function getSQLLogger(): Logger
+    {
         return $this->sqlLogger;
     }
 
     /**
      * @return Logger
      */
-    public function getAccessLogger() : Logger {
+    public function getAccessLogger(): Logger
+    {
         return $this->accessLogger;
     }
-
 }
