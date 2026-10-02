@@ -20,16 +20,32 @@
     ],
     "config": {
         "platform": {
-            "php" : "8.3"
+            "php": "8.3"
         }
     },
     "minimum-stability": "stable",
     "require": {
-        "php" : "^8.3",
+        "php": "^8.3",
         "monolog/monolog": "^3.12",
         "ext-pdo": "*"
     },
     "require-dev": {
-        "symfony/var-dumper": "^7.4"
+        "symfony/var-dumper": "^7.4",
+        "squizlabs/php_codesniffer": "^4.0",
+        "phpstan/phpstan": "^2.2",
+        "phpmetrics/phpmetrics": "^2.11"
+    },
+    "scripts": {
+        "serve": [
+            "clear",
+            "Composer\\Config::disableProcessTimeout",
+            "php -S 127.0.0.1:8080 -t public"
+        ],
+        "phpcs": "./vendor/bin/phpcs -p --standard=PSR12 --report-full app",
+        "phpcbf": "./vendor/bin/phpcbf --standard=PSR12 app",
+        "phpgen": "./vendor/bin/phpcs -p --standard=PSR12 --generator=HTML > storage/reports/generated.html",
+        "phpstan": "./vendor/bin/phpstan analyse -l 6 app --error-format table",
+        "dockerphpstan": "sudo docker run -it --rm -v $(pwd):/app ghcr.io/phpstan/phpstan analyse -l 6 app --error-format table",
+        "phpmetrics": "./vendor/bin/phpmetrics --report-html=storage/phpmetrics/ app"
     }
 }

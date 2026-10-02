@@ -9,8 +9,8 @@ use Exception;
  * Class Pompier
  * @package Supalta\Cannelle\model
  */
-class Pompier extends \stdClass {
-
+class Pompier extends \stdClass
+{
     private string $Matricule;
     private string $Prenom;
     private string $Nom;
@@ -23,7 +23,8 @@ class Pompier extends \stdClass {
     /**
      * @return string
      */
-    public function getMatricule(): string {
+    public function getMatricule(): string
+    {
         return $this->Matricule;
     }
 
@@ -32,7 +33,8 @@ class Pompier extends \stdClass {
      * @return $this
      * @throws Exception
      */
-    public function setMatricule(string $Matricule): Pompier {
+    public function setMatricule(string $Matricule): Pompier
+    {
         if (mb_strlen($Matricule) !== 7) {
             throw new Exception("Le matricule doit contenir exactement 7 caractères !");
         }
@@ -49,7 +51,8 @@ class Pompier extends \stdClass {
     /**
      * @return string
      */
-    public function getPrenom(): string{
+    public function getPrenom(): string
+    {
         return $this->Prenom;
     }
 
@@ -58,7 +61,8 @@ class Pompier extends \stdClass {
      * @return $this
      * @throws Exception
      */
-    public function setPrenom(string $Prenom): Pompier {
+    public function setPrenom(string $Prenom): Pompier
+    {
         if ($Prenom === "") {
             throw new Exception("Le prénom ne peut pas être vide !");
         }
@@ -72,7 +76,8 @@ class Pompier extends \stdClass {
     /**
      * @return string
      */
-    public function getNom(): string {
+    public function getNom(): string
+    {
         return $this->Nom;
     }
 
@@ -81,7 +86,8 @@ class Pompier extends \stdClass {
      * @return $this
      * @throws Exception
      */
-    public function setNom(string $Nom): Pompier {
+    public function setNom(string $Nom): Pompier
+    {
         if ($Nom === "") {
             throw new Exception("Le nom ne peut pas être vide !");
         }
@@ -95,7 +101,8 @@ class Pompier extends \stdClass {
     /**
      * @return string
      */
-    public function getChefAgret(): string {
+    public function getChefAgret(): string
+    {
         return $this->ChefAgret;
     }
 
@@ -104,7 +111,8 @@ class Pompier extends \stdClass {
      * @return $this
      * @throws Exception
      */
-    public function setChefAgret(string $ChefAgret): Pompier {
+    public function setChefAgret(string $ChefAgret): Pompier
+    {
         if (!in_array($ChefAgret, ["O", "N"])) {
             throw new Exception("Le chef d'agrès doit être 'O' ou 'N' !");
         }
@@ -115,7 +123,8 @@ class Pompier extends \stdClass {
     /**
      * @return DateTime
      */
-    public function getDateNaissance(): DateTime {
+    public function getDateNaissance(): DateTime
+    {
         return $this->DateNaissance;
     }
 
@@ -124,7 +133,8 @@ class Pompier extends \stdClass {
      * @return $this
      * @throws Exception
      */
-    public function setDateNaissance(DateTime $DateNaissance): Pompier {
+    public function setDateNaissance(DateTime $DateNaissance): Pompier
+    {
         if ($DateNaissance > new DateTime()) {
             throw new Exception("La date de naissance ne peut pas être dans le futur !");
         }
@@ -135,7 +145,8 @@ class Pompier extends \stdClass {
     /**
      * @return int
      */
-    public function getNumCaserne(): int {
+    public function getNumCaserne(): int
+    {
         return $this->NumCaserne;
     }
 
@@ -144,7 +155,8 @@ class Pompier extends \stdClass {
      * @return $this
      * @throws Exception
      */
-    public function setNumCaserne(int $NumCaserne): Pompier {
+    public function setNumCaserne(int $NumCaserne): Pompier
+    {
         if ($NumCaserne <= 0) {
             throw new Exception("Le numéro de caserne doit être positif !");
         }
@@ -155,7 +167,8 @@ class Pompier extends \stdClass {
     /**
      * @return string
      */
-    public function getCodeGrade(): string {
+    public function getCodeGrade(): string
+    {
         return $this->CodeGrade;
     }
 
@@ -164,7 +177,8 @@ class Pompier extends \stdClass {
      * @return $this
      * @throws Exception
      */
-    public function setCodeGrade(string $CodeGrade): Pompier {
+    public function setCodeGrade(string $CodeGrade): Pompier
+    {
         $grades = ["1C", "AC", "Ad", "Ca", "CC", "Ct", "In", "Lt", "Ma", "SC", "Sg", "SP"];
         if (!in_array($CodeGrade, $grades)) {
             throw new Exception("Le code de grade n'est pas valide !");
@@ -176,7 +190,8 @@ class Pompier extends \stdClass {
     /**
      * @return string
      */
-    public function getMatriculeRespo(): string {
+    public function getMatriculeRespo(): string
+    {
         return $this->MatriculeRespo;
     }
 
@@ -186,7 +201,8 @@ class Pompier extends \stdClass {
      * @return $this
      * @throws Exception
      */
-    public function setMatriculeRespo(string $MatriculeRespo): Pompier {
+    public function setMatriculeRespo(string $MatriculeRespo): Pompier
+    {
         if (mb_strlen($MatriculeRespo) !== 7) {
             throw new Exception("Le matricule du responsable doit contenir exactement 7 caractères !");
         }
@@ -199,5 +215,4 @@ class Pompier extends \stdClass {
         $this->MatriculeRespo = $MatriculeRespo;
         return $this;
     }
-
 }
