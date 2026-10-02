@@ -47,5 +47,14 @@
         "phpstan": "./vendor/bin/phpstan analyse -l 6 app --error-format table",
         "dockerphpstan": "sudo docker run -it --rm -v $(pwd):/app ghcr.io/phpstan/phpstan analyse -l 6 app --error-format table",
         "phpmetrics": "./vendor/bin/phpmetrics --report-html=storage/phpmetrics/ app"
+    },
+    "script-description": {
+        "serve": "Démarre le serveur PHP local sur le port 8080 depuis le dossier public.",
+        "phpcs": "Vérifie le respect du standard PSR-12 dans app et affiche les erreurs de style.",
+        "phpcbf": "Corrige automatiquement les erreurs de style PSR-12 dans app lorsque c'est possible.",
+        "phpgen": "Génère la documentation des règles PSR-12 dans storage/reports/generated.html.",
+        "phpstan": "Analyse le code du dossier app au niveau 6 pour détecter les erreurs potentielles.",
+        "dockerphpstan": "Exécute PHPStan dans Docker pour analyser le dossier app au niveau 6.",
+        "phpmetrics": "Génère un rapport HTML sur la complexité et la maintenabilité du code de app dans storage/phpmetrics/."
     }
 }

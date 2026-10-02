@@ -52,7 +52,7 @@ class DAOPompier extends DAO
      */
     public function find(string $matricule): ?Pompier
     {
-        $sql = "SELECT * FROM pompiers WHERE Matricule = :Matricule";
+        $sql = "SELECT * FROM pompiers WHERE Matricule = :Matricule AND Deleted = FALSE";
 
         $preparedStatement = $this->pdo->prepare($sql);
         $preparedStatement -> bindValue("Matricule", $matricule, PDO::PARAM_STR);
@@ -143,7 +143,7 @@ class DAOPompier extends DAO
             throw new Exception("Le pompier " . $pompier->getMatricule() . " n'existe pas !");
         }
 
-        $sql = "DELETE FROM pompiers WHERE Matricule = :Matricule";
+        $sql = "UPDATE pompiers SET Deleted = TRUE WHERE Matricule = :Matricule";
 
         $preparedStatement = $this->pdo->prepare($sql);
         $preparedStatement->bindValue("Matricule", $pompier->getMatricule(), PDO::PARAM_STR);
@@ -161,7 +161,7 @@ class DAOPompier extends DAO
      */
     public function findAll(int $offset = 0, int $limit = 100): array
     {
-        $sql = "SELECT * FROM pompiers ORDER BY Matricule LIMIT :offset, :limit";
+        $sql = "SELECT * FROM pompiers WHERE Deleted = FALSE ORDER BY Matricule LIMIT :offset, :limit";
 
         $preparedStatement = $this->pdo->prepare($sql);
         $preparedStatement->bindValue("offset", $offset, PDO::PARAM_INT);
@@ -189,7 +189,7 @@ class DAOPompier extends DAO
      */
     public function count(): int
     {
-        $sql = "SELECT COUNT(*) FROM pompiers";
+        $sql = "SELECT COUNT(*) FROM pompiers WHERE Deleted = FALSE";
 
         $count = $this->pdo->query($sql)->fetchColumn();
 
@@ -204,7 +204,7 @@ class DAOPompier extends DAO
      */
     public function findByName(string $name): array
     {
-        $sql = "SELECT * FROM pompiers WHERE Nom = :Name";
+        $sql = "SELECT * FROM pompiers WHERE Nom = :Name" AND Deleted = FALSE;
 
         $preparedStatement = $this->pdo->prepare($sql);
         $preparedStatement->bindValue("Name", $name, PDO::PARAM_STR);
