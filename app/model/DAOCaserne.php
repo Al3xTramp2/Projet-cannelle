@@ -43,7 +43,7 @@ class DAOCaserne extends DAO
      */
     public function find(int $id): ?Caserne
     {
-        $sql = "SELECT * FROM casernes WHERE NumCaserne = :NumCaserne" AND Deleted = FALSE;
+        $sql = "SELECT * FROM casernes WHERE NumCaserne = :NumCaserne AND Deleted = FALSE";
 
         $preparedStatement = $this->pdo->prepare($sql);
         $preparedStatement->bindValue("NumCaserne", $id, PDO::PARAM_INT);
@@ -85,10 +85,10 @@ class DAOCaserne extends DAO
     public function update(Caserne $caserne): bool
     {
         if ($this->find($caserne->getNumCaserne()) === null) {
-            throw new Exception("La caserne portant le numéro " . $caserne->getNumCaserne() . " n'existe pas !");2
+            throw new Exception("La caserne portant le numéro " . $caserne->getNumCaserne() . " n'existe pas !");
         }
 
-        $sql = "UPDATE casernes SET Adresse = :Adresse, CP = :CP, Ville = :Ville, CodeTypeC = :CodeTypeC"
+        $sql = "UPDATE casernes SET Adresse = :Adresse, CP = :CP, Ville = :Ville, CodeTypeC = :CodeTypeC "
              . "WHERE NumCaserne = :NumCaserne";
 
         $preparedStatement = $this->pdo->prepare($sql);
@@ -113,7 +113,7 @@ class DAOCaserne extends DAO
             throw new Exception("La caserne portant le numéro " . $caserne->getNumCaserne() . " n'existe pas !");
         }
 
-        $sql = "UPDATE caserne SET Deleted = TRUE WHERE NumCaserne = :NumCaserne";
+        $sql = "UPDATE casernes SET Deleted = TRUE WHERE NumCaserne = :NumCaserne";
 
         $preparedStatement = $this->pdo->prepare($sql);
         $preparedStatement->bindValue("NumCaserne", $caserne->getNumCaserne(), PDO::PARAM_INT);

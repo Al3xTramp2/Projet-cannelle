@@ -204,7 +204,7 @@ class DAOPompier extends DAO
      */
     public function findByName(string $name): array
     {
-        $sql = "SELECT * FROM pompiers WHERE Nom = :Name" AND Deleted = FALSE;
+        $sql = "SELECT * FROM pompiers WHERE Nom = :Name AND Deleted = FALSE";
 
         $preparedStatement = $this->pdo->prepare($sql);
         $preparedStatement->bindValue("Name", $name, PDO::PARAM_STR);

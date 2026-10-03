@@ -48,7 +48,7 @@
         "dockerphpstan": "sudo docker run -it --rm -v $(pwd):/app ghcr.io/phpstan/phpstan analyse -l 6 app --error-format table",
         "phpmetrics": "./vendor/bin/phpmetrics --report-html=storage/phpmetrics/ app"
     },
-    "script-description": {
+    "scripts-descriptions": {
         "serve": "Démarre le serveur PHP local sur le port 8080 depuis le dossier public.",
         "phpcs": "Vérifie le respect du standard PSR-12 dans app et affiche les erreurs de style.",
         "phpcbf": "Corrige automatiquement les erreurs de style PSR-12 dans app lorsque c'est possible.",
