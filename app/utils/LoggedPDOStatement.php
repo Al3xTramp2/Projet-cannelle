@@ -109,6 +109,15 @@ class LoggedPDOStatement extends PDOStatement
     }
 
     /**
+     * @param int $column
+     * @return mixed
+     */
+    public function fetchColumn(int $column = 0): mixed
+    {
+        return $this->statement->fetchColumn($column);
+    }
+
+    /**
      * @param $mode
      * @param ...$args
      * @return bool

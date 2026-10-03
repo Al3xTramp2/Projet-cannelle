@@ -112,14 +112,17 @@ class DAOCaserne extends DAO
         if ($this->find($caserne->getNumCaserne()) === null) {
             throw new Exception("La caserne portant le numéro " . $caserne->getNumCaserne() . " n'existe pas !");
         }
-
-        $sql = "UPDATE casernes SET Deleted = TRUE WHERE NumCaserne = :NumCaserne";
-
+        // Update des pompiers appartenant à la caserne
+        $sql = "UPDATE pompiers SET NumCaserne = NULL WHERE NumCaserne = :NumCaserne AND Deleted = FALSE";
         $preparedStatement = $this->pdo->prepare($sql);
         $preparedStatement->bindValue("NumCaserne", $caserne->getNumCaserne(), PDO::PARAM_INT);
         $preparedStatement->execute();
+        // Update de la caserne
+        $sql = "UPDATE casernes SET Deleted = TRUE WHERE NumCaserne = :NumCaserne";
+        $preparedStatement = $this->pdo->prepare($sql);
+        $preparedStatement->bindValue("NumCaserne", $caserne->getNumCaserne(), PDO::PARAM_INT);
 
-        return $preparedStatement->rowCount() > 0;
+        return $preparedStatement->execute();
     }
 
     /**

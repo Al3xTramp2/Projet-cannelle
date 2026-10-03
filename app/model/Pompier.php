@@ -16,9 +16,9 @@ class Pompier extends \stdClass
     private string $Nom;
     private string $ChefAgret;
     private DateTime $DateNaissance;
-    private int $NumCaserne;
+    private ?int $NumCaserne;
     private string $CodeGrade;
-    private string $MatriculeRespo;
+    private ?string $MatriculeRespo;
 
     /**
      * @return string
@@ -143,21 +143,21 @@ class Pompier extends \stdClass
     }
 
     /**
-     * @return int
+     * @return int|null
      */
-    public function getNumCaserne(): int
+    public function getNumCaserne(): ?int
     {
         return $this->NumCaserne;
     }
 
     /**
-     * @param int $NumCaserne
+     * @param int|null $NumCaserne
      * @return $this
      * @throws Exception
      */
-    public function setNumCaserne(int $NumCaserne): Pompier
+    public function setNumCaserne(?int $NumCaserne): Pompier
     {
-        if ($NumCaserne <= 0) {
+        if ($NumCaserne !== null && $NumCaserne <= 0) {
             throw new Exception("Le numéro de caserne doit être positif !");
         }
         $this->NumCaserne = $NumCaserne;
@@ -188,29 +188,31 @@ class Pompier extends \stdClass
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getMatriculeRespo(): string
+    public function getMatriculeRespo(): ?string
     {
         return $this->MatriculeRespo;
     }
 
 
     /**
-     * @param string $MatriculeRespo
+     * @param string|null $MatriculeRespo
      * @return $this
      * @throws Exception
      */
-    public function setMatriculeRespo(string $MatriculeRespo): Pompier
+    public function setMatriculeRespo(?string $MatriculeRespo): Pompier
     {
-        if (mb_strlen($MatriculeRespo) !== 7) {
-            throw new Exception("Le matricule du responsable doit contenir exactement 7 caractères !");
-        }
-        if (!str_starts_with($MatriculeRespo, "Ma")) {
-            throw new Exception("Le matricule du responsable doit commencer par 'Ma' !");
-        }
-        if (!ctype_digit(substr($MatriculeRespo, -5))) {
-            throw new Exception("Les 5 derniers caractères du matricule du responsable doivent être des chiffres !");
+        if ($MatriculeRespo !== null) {
+            if (mb_strlen($MatriculeRespo) !== 7) {
+                throw new Exception("Le matricule du resp. doit contenir exactement 7 caractères !");
+            }
+            if (!str_starts_with($MatriculeRespo, "Ma")) {
+                throw new Exception("Le matricule du resp. doit commencer par 'Ma' !");
+            }
+            if (!ctype_digit(substr($MatriculeRespo, -5))) {
+                throw new Exception("Les 5 derniers caractères du matricule du resp. doivent être des chiffres !");
+            }
         }
         $this->MatriculeRespo = $MatriculeRespo;
         return $this;

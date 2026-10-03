@@ -46,7 +46,13 @@
         "phpgen": "./vendor/bin/phpcs -p --standard=PSR12 --generator=HTML > storage/reports/generated.html",
         "phpstan": "./vendor/bin/phpstan analyse -l 6 app --error-format table",
         "dockerphpstan": "sudo docker run -it --rm -v $(pwd):/app ghcr.io/phpstan/phpstan analyse -l 6 app --error-format table",
-        "phpmetrics": "./vendor/bin/phpmetrics --report-html=storage/phpmetrics/ app"
+        "phpmetrics": "./vendor/bin/phpmetrics --report-html=storage/phpmetrics/ app",
+        "dbreset": [
+            "sudo mariadb -u root -p < sql/01_structure.sql",
+            "sudo mariadb -u root -p < sql/02_seed_casernes.sql",
+            "sudo mariadb -u root -p < sql/03_seed_pompiers.sql",
+            "sudo mariadb -u root -p < sql/04_safe_delete.sql"
+        ]
     },
     "scripts-descriptions": {
         "serve": "Démarre le serveur PHP local sur le port 8080 depuis le dossier public.",
@@ -55,6 +61,7 @@
         "phpgen": "Génère la documentation des règles PSR-12 dans storage/reports/generated.html.",
         "phpstan": "Analyse le code du dossier app au niveau 6 pour détecter les erreurs potentielles.",
         "dockerphpstan": "Exécute PHPStan dans Docker pour analyser le dossier app au niveau 6.",
-        "phpmetrics": "Génère un rapport HTML sur la complexité et la maintenabilité du code de app dans storage/phpmetrics/."
+        "phpmetrics": "Génère un rapport HTML sur la complexité et la maintenabilité du code de app dans storage/phpmetrics/.",
+        "dbreset": "Permet de réinitialiser la BDD avec les valeurs d'origines écrites en brut dans les fichiers SQL."
     }
 }
