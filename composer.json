@@ -47,12 +47,7 @@
         "phpstan": "./vendor/bin/phpstan analyse -l 6 app --error-format table",
         "dockerphpstan": "sudo docker run -it --rm -v $(pwd):/app ghcr.io/phpstan/phpstan analyse -l 6 app --error-format table",
         "phpmetrics": "./vendor/bin/phpmetrics --report-html=storage/phpmetrics/ app",
-        "dbreset": [
-            "sudo mariadb -u root -p < sql/01_structure.sql",
-            "sudo mariadb -u root -p < sql/02_seed_casernes.sql",
-            "sudo mariadb -u root -p < sql/03_seed_pompiers.sql",
-            "sudo mariadb -u root -p < sql/04_safe_delete.sql"
-        ]
+        "dbreset": "cat sql/01_structure.sql sql/02_seed_casernes.sql sql/03_seed_pompiers.sql sql/04_safe_delete.sql | mariadb -u root -p"
     },
     "scripts-descriptions": {
         "serve": "Démarre le serveur PHP local sur le port 8080 depuis le dossier public.",
