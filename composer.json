@@ -33,7 +33,8 @@
         "symfony/var-dumper": "^7.4",
         "squizlabs/php_codesniffer": "^4.0",
         "phpstan/phpstan": "^2.2",
-        "phpmetrics/phpmetrics": "^2.11"
+        "phpmetrics/phpmetrics": "^2.11",
+        "phpmd/phpmd": "^3.0"
     },
     "scripts": {
         "serve": [
@@ -47,7 +48,9 @@
         "phpstan": "./vendor/bin/phpstan analyse -l 6 app --error-format table",
         "dockerphpstan": "sudo docker run -it --rm -v $(pwd):/app ghcr.io/phpstan/phpstan analyse -l 6 app --error-format table",
         "phpmetrics": "./vendor/bin/phpmetrics --report-html=storage/phpmetrics/ app",
-        "dbreset": "cat sql/01_structure.sql sql/02_seed_casernes.sql sql/03_seed_pompiers.sql sql/04_safe_delete.sql | mariadb -u root -p"
+        "dbreset": "cat sql/01_structure.sql sql/02_seed_casernes.sql sql/03_seed_pompiers.sql sql/04_safe_delete.sql | mariadb -u root -p",
+        "phpmd": "./vendor/bin/phpmd analyze app --format text --reportfile-html storage/phpmd.html",
+        "phpdoc": "php phpDocumentor.phar run -d app -t storage/docs --cache-folder storage/phpdoc-cache --title Cannelle"
     },
     "scripts-descriptions": {
         "serve": "Démarre le serveur PHP local sur le port 8080 depuis le dossier public.",
@@ -57,6 +60,8 @@
         "phpstan": "Analyse le code du dossier app au niveau 6 pour détecter les erreurs potentielles.",
         "dockerphpstan": "Exécute PHPStan dans Docker pour analyser le dossier app au niveau 6.",
         "phpmetrics": "Génère un rapport HTML sur la complexité et la maintenabilité du code de app dans storage/phpmetrics/.",
-        "dbreset": "Permet de réinitialiser la BDD avec les valeurs d'origines écrites en brut dans les fichiers SQL."
+        "dbreset": "Permet de réinitialiser la BDD avec les valeurs d'origines écrites en brut dans les fichiers SQL.",
+        "phpmd": "Détecte les mauvaises pratiques avec PHPMD, rapport HTML dans storage/phpmd.html.",
+        "phpdoc": "Génère la documentation du code dans storage/docs avec phpDocumentor."
     }
 }
