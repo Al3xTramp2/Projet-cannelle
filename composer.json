@@ -42,8 +42,8 @@
             "Composer\\Config::disableProcessTimeout",
             "php -S 127.0.0.1:8080 -t public"
         ],
-        "phpcs": "./vendor/bin/phpcs -p --standard=PSR12 --report-full app",
-        "phpcbf": "./vendor/bin/phpcbf --standard=PSR12 app",
+        "phpcs": "./vendor/bin/phpcs -p --standard=PSR12 --report-full --ignore=app/view app",
+        "phpcbf": "./vendor/bin/phpcbf --standard=PSR12 --ignore=app/view app",
         "phpgen": "./vendor/bin/phpcs -p --standard=PSR12 --generator=HTML > storage/reports/generated.html",
         "phpstan": "./vendor/bin/phpstan analyse -l 6 app --error-format table",
         "dockerphpstan": "sudo docker run -it --rm -v $(pwd):/app ghcr.io/phpstan/phpstan analyse -l 6 app --error-format table",

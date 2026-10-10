@@ -11,6 +11,21 @@ use Exception;
  */
 class Pompier extends \stdClass
 {
+    public const GRADES = [
+        "1C" => "1ere classe",
+        "AC" => "Adjudent Chef",
+        "Ad" => "Adjudent",
+        "Ca" => "Caporal",
+        "CC" => "Caporal Chef",
+        "Ct" => "Capitaine",
+        "In" => "Infirmier",
+        "Lt" => "Lieutenant",
+        "Ma" => "Major",
+        "SC" => "Sergent Chef",
+        "Sg" => "Sergent",
+        "SP" => "Sapeur"
+    ];
+
     private string $Matricule;
     private string $Prenom;
     private string $Nom;
@@ -179,12 +194,19 @@ class Pompier extends \stdClass
      */
     public function setCodeGrade(string $CodeGrade): Pompier
     {
-        $grades = ["1C", "AC", "Ad", "Ca", "CC", "Ct", "In", "Lt", "Ma", "SC", "Sg", "SP"];
-        if (!in_array($CodeGrade, $grades)) {
+        if (!array_key_exists($CodeGrade, self::GRADES)) {
             throw new Exception("Le code de grade n'est pas valide !");
         }
         $this->CodeGrade = $CodeGrade;
         return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getGrade(): string
+    {
+        return self::GRADES[$this->CodeGrade];
     }
 
     /**
