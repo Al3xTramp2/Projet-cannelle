@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Supprimer un pompier</title>
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+</head>
+<body>
+<nav class="navbar navbar-expand-lg bg-danger" data-bs-theme="dark">
+    <div class="container">
+        <a class="navbar-brand" href="index.php?c=default&amp;a=home">Cannelle</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menu" aria-controls="menu" aria-expanded="false" aria-label="Afficher le menu">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="menu">
+            <ul class="navbar-nav me-auto">
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="index.php?c=pompier&amp;a=show">Pompiers</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link disabled" aria-disabled="true">Casernes</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<main class="container my-4">
+    <div class="card border-danger">
+        <div class="card-header bg-danger text-white">
+            <h1 class="h5 mb-0">Supprimer {{ $pompier->getPrenom() }} {{ $pompier->getNom() }} ?</h1>
+        </div>
+        <div class="card-body">
+            <p class="mb-3">Le pompier {{ $pompier->getMatricule() }} sera marqué comme supprimé.</p>
+            <form method="post" action="index.php">
+                <input type="hidden" name="c" value="pompier">
+                <input type="hidden" name="a" value="doDelete">
+                <input type="hidden" name="matricule" value="{{ $pompier->getMatricule() }}">
+                <button type="submit" class="btn btn-danger">Confirmer la suppression</button>
+                <a class="btn btn-outline-secondary" href="index.php?c=pompier&amp;a=show">Annuler</a>
+            </form>
+        </div>
+    </div>
+</main>
+<script src="/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
