@@ -2,18 +2,17 @@
 
 namespace Supalta\Cannelle\controller;
 
-use Exception;
-use Supalta\Cannelle\model\DAOCaserne;
 use Supalta\Cannelle\model\Caserne;
-use Supalta\Cannelle\utils\SingletonDataBaseMariaDB;
+use Supalta\Cannelle\model\DAOCaserne;
 use Supalta\Cannelle\utils\Renderer;
+use Supalta\Cannelle\utils\SingletonDataBaseMariaDB;
+use Exception;
 
 /**
  * Controller of the Caserne: lists, shows, creates, updates and deletes them
  */
 class CaserneController extends BaseController
 {
-    /** Data access object of the casernes */
     private DAOCaserne $daoCaserne;
 
     /**
@@ -35,7 +34,7 @@ class CaserneController extends BaseController
     {
         $casernes = $this->daoCaserne->findAll(0, 1000);
         $total = count($casernes);
-        echo Renderer::render("caserneListe", compact("casernes", "total"));
+        echo Renderer::render('caserneListe', compact('casernes', 'total'));
     }
 
     /**
@@ -47,7 +46,7 @@ class CaserneController extends BaseController
     public function detail(string $data): void
     {
         $caserne = $this->daoCaserne->find((int) $data);
-        echo Renderer::render("caserneDetail", compact("caserne"));
+        echo Renderer::render('caserneDetail', compact('caserne'));
     }
 
     /**
@@ -57,8 +56,8 @@ class CaserneController extends BaseController
      */
     public function create(): void
     {
-        $types = Caserne::TYPESCASERNES;
-        echo Renderer::render("caserneCreate", compact("types"));
+        $types = Caserne::TYPES;
+        echo Renderer::render('caserneCreate', compact('types'));
     }
 
     /**
@@ -70,10 +69,10 @@ class CaserneController extends BaseController
     public function doCreate(array $data): void
     {
         $caserne = (new Caserne())
-            ->setAdresse($data["adresse"])
-            ->setCP($data["cp"])
-            ->setVille($data["ville"])
-            ->setCodeTypeC($data["codeTypeC"]);
+            ->setAdresse($data['adresse'])
+            ->setCP($data['cp'])
+            ->setVille($data['ville'])
+            ->setCodeTypeC($data['codeTypeC']);
         $this->daoCaserne->save($caserne);
         $this->detail((string) $caserne->getNumCaserne());
     }
@@ -87,8 +86,8 @@ class CaserneController extends BaseController
     public function update(string $data): void
     {
         $caserne = $this->daoCaserne->find((int) $data);
-        $types = Caserne::TYPESCASERNES;
-        echo Renderer::render("caserneUpdate", compact("caserne", "types"));
+        $types = Caserne::TYPES;
+        echo Renderer::render('caserneUpdate', compact('caserne', 'types'));
     }
 
     /**
@@ -99,11 +98,11 @@ class CaserneController extends BaseController
      */
     public function doUpdate(array $data): void
     {
-        $caserne = $this->daoCaserne->find((int) $data["numCaserne"]);
-        $caserne->setAdresse($data["adresse"])
-            ->setCP($data["cp"])
-            ->setVille($data["ville"])
-            ->setCodeTypeC($data["codeTypeC"]);
+        $caserne = $this->daoCaserne->find((int) $data['numCaserne']);
+        $caserne->setAdresse($data['adresse'])
+            ->setCP($data['cp'])
+            ->setVille($data['ville'])
+            ->setCodeTypeC($data['codeTypeC']);
         $this->daoCaserne->update($caserne);
         $this->detail((string) $caserne->getNumCaserne());
     }
@@ -114,21 +113,21 @@ class CaserneController extends BaseController
      * @return void
      * @throws Exception
      */
-    public function delete($data): void
+    public function delete(string $data): void
     {
         $caserne = $this->daoCaserne->find((int) $data);
-        echo Renderer::render("caserneDelete", compact("caserne"));
+        echo Renderer::render('caserneDelete', compact('caserne'));
     }
 
     /**
      * Delete the caserne and display the list
-     * @param array<string, mixed> $data
+     * @param string $data
      * @return void
      * @throws Exception
      */
-    public function doDelete(array $data): void
+    public function doDelete(string $data): void
     {
-        $caserne = $this->daoCaserne->find((int) $data["numCaserne"]);
+        $caserne = $this->daoCaserne->find((int) $data);
         $this->daoCaserne->delete($caserne);
         $this->show();
     }
@@ -139,10 +138,10 @@ class CaserneController extends BaseController
      * @return void
      * @throws Exception
      */
-    public function findByVille(string $data): void
+    public function showByVille(string $data): void
     {
         $casernes = $this->daoCaserne->findByVille($data);
         $total = count($casernes);
-        echo Renderer::render("caserneListe", compact("casernes", "total"));
+        echo Renderer::render('caserneListe', compact('casernes', 'total'));
     }
 }

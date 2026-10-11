@@ -14,6 +14,7 @@ class Renderer
      * @param string $file
      * @param array<string, mixed>|null $data
      * @return string|false
+     * @throws Exception
      */
     public static function render(string $file, array $data = null)
     {

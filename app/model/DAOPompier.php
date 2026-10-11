@@ -12,7 +12,6 @@ use PDO;
  */
 class DAOPompier extends DAO
 {
-    /** Connection used to run the queries */
     private PDO $pdo;
 
     /**

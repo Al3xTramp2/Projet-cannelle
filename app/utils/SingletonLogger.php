@@ -13,11 +13,8 @@ use Monolog\Processor\WebProcessor;
  */
 class SingletonLogger
 {
-    /** Logger of the SQL queries */
     private ?Logger $sqlLogger = null;
-    /** Logger of the accesses */
     private ?Logger $accessLogger = null;
-    /** Single instance of the class */
     private static ?SingletonLogger $instance = null;
 
     /** @var array<string, string> */

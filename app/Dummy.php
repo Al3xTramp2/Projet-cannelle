@@ -7,7 +7,6 @@ namespace Supalta\Cannelle ;
  */
 class Dummy
 {
-    /** Message displayed by the greeting */
     private string $msg = "Hello World !";
 
     /**

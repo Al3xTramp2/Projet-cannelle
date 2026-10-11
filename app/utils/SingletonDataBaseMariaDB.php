@@ -10,11 +10,8 @@ use PDO;
  */
 class SingletonDataBaseMariaDB
 {
-    /** Plain PDO connection */
     private PDO $pdo;
-    /** PDO connection logging every query */
     private LoggedPDO $loggedPdo;
-    /** Single instance of the class */
     private static ?SingletonDataBaseMariaDB $instance = null ;
 
     /**

@@ -12,11 +12,8 @@ use Monolog\Logger;
  */
 class LoggedPDOStatement extends PDOStatement
 {
-    /** Statement decorated by this class */
     private PDOStatement $statement;
-    /** Logger receiving the queries */
     private Logger $logger;
-    /** User written in each log line */
     private string $user;
 
     /**

@@ -39,7 +39,7 @@
     </div>
     <form method="get" action="index.php" class="row g-2 mb-3">
         <input type="hidden" name="c" value="caserne">
-        <input type="hidden" name="a" value="findByVille">
+        <input type="hidden" name="a" value="showByVille">
         <div class="col-auto">
             <input type="text" class="form-control" name="ville" maxlength="20"
                    placeholder="Ville (nom exact)" aria-label="Ville" required>
@@ -67,7 +67,7 @@
                 <td>{{ $caserne->getAdresse() }}</td>
                 <td>{{ $caserne->getCP() }}</td>
                 <td>{{ $caserne->getVille() }}</td>
-                <td>{{ $caserne->getCodeTypeCName() }}</td>
+                <td>{{ $caserne->getType() }}</td>
                 <td class="text-end">
                     <a class="btn btn-sm btn-outline-secondary"
                        href="index.php?c=caserne&amp;a=detail&amp;numCaserne={{ $caserne->getNumCaserne() }}">Détail</a>

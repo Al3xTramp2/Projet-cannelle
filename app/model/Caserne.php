@@ -10,22 +10,16 @@ use Exception;
  */
 class Caserne extends \stdClass
 {
-    /** Names of the types of casernes indexed by their code */
-    public const TYPESCASERNES = [
+    public const array TYPES = [
         "1" => "Pro",
         "2" => "Mixte",
         "3" => "Volontaire"
     ];
 
-    /** Number of the caserne (primary key) */
     private int $NumCaserne;
-    /** Street address of the caserne */
     private string $Adresse;
-    /** Postal code of the caserne */
     private string $CP;
-    /** City of the caserne */
     private string $Ville;
-    /** Code of the type of the caserne */
     private int $CodeTypeC;
 
     /**
@@ -147,8 +141,8 @@ class Caserne extends \stdClass
      */
     public function setCodeTypeC(int $CodeTypeC): Caserne
     {
-        if (!array_key_exists((string)$CodeTypeC, self::TYPESCASERNES)) {
-            throw new Exception("Le code de type de caserne doit être '1', '2' ou '3' !");
+        if (!array_key_exists((string)$CodeTypeC, self::TYPES)) {
+            throw new Exception("Le code de type de caserne n'est pas valide !");
         }
         $this->CodeTypeC = $CodeTypeC;
         return $this;
@@ -158,8 +152,8 @@ class Caserne extends \stdClass
      * Return the name of the type of the Caserne according to its code
      * @return string
      */
-    public function getCodeTypeCName(): string
+    public function getType(): string
     {
-        return self::TYPESCASERNES[(string)$this->CodeTypeC];
+        return self::TYPES[(string)$this->CodeTypeC];
     }
 }

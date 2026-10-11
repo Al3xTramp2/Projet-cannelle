@@ -11,8 +11,7 @@ use Exception;
  */
 class Pompier extends \stdClass
 {
-    /** Names of the grades indexed by their code */
-    public const GRADES = [
+    public const array GRADES = [
         "1C" => "1ere classe",
         "AC" => "Adjudent Chef",
         "Ad" => "Adjudent",
@@ -27,21 +26,13 @@ class Pompier extends \stdClass
         "SP" => "Sapeur"
     ];
 
-    /** Matricule of the pompier (primary key) */
     private string $Matricule;
-    /** First name of the pompier */
     private string $Prenom;
-    /** Last name of the pompier */
     private string $Nom;
-    /** Whether the pompier is a chef d'agret */
     private string $ChefAgret;
-    /** Date of birth of the pompier */
     private DateTime $DateNaissance;
-    /** Number of the caserne of the pompier, null if unassigned */
     private ?int $NumCaserne;
-    /** Code of the grade of the pompier */
     private string $CodeGrade;
-    /** Matricule of the superior, null if none */
     private ?string $MatriculeRespo;
 
     /**

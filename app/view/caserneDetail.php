@@ -56,7 +56,7 @@
                 <dd class="col-sm-9">{{ $caserne->getVille() }}</dd>
 
                 <dt class="col-sm-3">Type de caserne</dt>
-                <dd class="col-sm-9">{{ $caserne->getCodeTypeCName() }}</dd>
+                <dd class="col-sm-9">{{ $caserne->getType() }}</dd>
             </dl>
         </div>
 

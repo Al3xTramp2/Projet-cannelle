@@ -15,9 +15,7 @@ use Exception;
  */
 class PompierController extends BaseController
 {
-    /** Data access object of the pompiers */
     private DAOPompier $daoPompier;
-    /** Data access object of the casernes */
     private DAOCaserne $daoCaserne;
 
     /**
@@ -136,13 +134,13 @@ class PompierController extends BaseController
 
     /**
      * Delete the pompier and display the list
-     * @param array<string, mixed> $data
+     * @param string $data
      * @return void
      * @throws Exception
      */
-    public function doDelete(array $data): void
+    public function doDelete(string $data): void
     {
-        $pompier = $this->daoPompier->find($data['matricule']);
+        $pompier = $this->daoPompier->find($data);
         $this->daoPompier->delete($pompier);
         $this->show();
     }
