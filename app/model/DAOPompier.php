@@ -6,6 +6,9 @@ use DateTime;
 use Exception;
 use PDO;
 
+/**
+ * Data access object of the pompiers, uses the table pompiers
+ */
 class DAOPompier extends DAO
 {
     private PDO $pdo;

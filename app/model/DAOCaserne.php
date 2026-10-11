@@ -5,6 +5,9 @@ namespace Supalta\Cannelle\model;
 use Exception;
 use PDO;
 
+/**
+ * Data access object of the casernes, uses the table casernes
+ */
 class DAOCaserne extends DAO
 {
     private PDO $pdo;

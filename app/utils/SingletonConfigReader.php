@@ -4,6 +4,9 @@ namespace Supalta\Cannelle\utils;
 
 use Exception;
 
+/**
+ * Reads the values of config.ini (single instance)
+ */
 class SingletonConfigReader
 {
     private static SingletonConfigReader $instance;

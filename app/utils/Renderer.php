@@ -4,6 +4,9 @@ namespace Supalta\Cannelle\utils;
 
 use Exception;
 
+/**
+ * Compiles the views of app/view into cached PHP files and renders them
+ */
 class Renderer
 {
     /**
@@ -25,7 +28,6 @@ class Renderer
         $outputPath = $pathCache . $fingerprint . ".php";
 
         if (!file_exists($outputPath)) {
-            // TODO S/R, preg_replace
             $content = preg_replace('/{{\s*(.+?)\s*}}/', "<?php echo htmlspecialchars($1); ?>", $content);
             $content = preg_replace('/@foreach\s*\((.+)\)/', "<?php foreach ($1) { ?>", $content);
             $content = preg_replace('/@if\s*\((.+)\)/', "<?php if ($1) { ?>", $content);

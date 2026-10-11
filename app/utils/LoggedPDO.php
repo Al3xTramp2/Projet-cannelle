@@ -4,6 +4,9 @@ namespace Supalta\Cannelle\utils;
 
 use PDO;
 
+/**
+ * PDO that logs each prepared statement through the SQL logger
+ */
 class LoggedPDO extends PDO
 {
     /**

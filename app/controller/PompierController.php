@@ -10,6 +10,9 @@ use Supalta\Cannelle\utils\SingletonDataBaseMariaDB;
 use DateTime;
 use Exception;
 
+/**
+ * Controller of the pompiers: lists, shows, creates, updates and deletes them
+ */
 class PompierController extends BaseController
 {
     private DAOPompier $daoPompier;
@@ -61,7 +64,7 @@ class PompierController extends BaseController
     }
 
     /**
-     * @param array $data
+     * @param array<string, mixed> $data
      * @return void
      * @throws Exception
      */
@@ -93,7 +96,7 @@ class PompierController extends BaseController
     }
 
     /**
-     * @param array $data
+     * @param array<string, mixed> $data
      * @return void
      * @throws Exception
      */
@@ -123,7 +126,7 @@ class PompierController extends BaseController
     }
 
     /**
-     * @param array $data
+     * @param array<string, mixed> $data
      * @return void
      * @throws Exception
      */

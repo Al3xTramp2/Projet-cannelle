@@ -5,6 +5,9 @@ namespace Supalta\Cannelle\utils;
 use Exception;
 use PDO;
 
+/**
+ * Provides the PDO connections to the MariaDB database (single instance)
+ */
 class SingletonDataBaseMariaDB
 {
     private PDO $pdo;
@@ -53,6 +56,10 @@ class SingletonDataBaseMariaDB
         return $this->pdo;
     }
 
+    /**
+     * Return the PDO object that logs each query
+     * @return PDO
+     */
     public function getLoggedPDO(): PDO
     {
         return $this->loggedPdo;

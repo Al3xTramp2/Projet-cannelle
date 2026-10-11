@@ -8,6 +8,9 @@ use Monolog\Level;
 use Monolog\Logger;
 use Monolog\Processor\WebProcessor;
 
+/**
+ * Provides the SQL logger and the access logger
+ */
 class SingletonLogger
 {
     private ?Logger $sqlLogger = null;

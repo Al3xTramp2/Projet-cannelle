@@ -7,6 +7,9 @@ use PDO;
 use PDOStatement;
 use Monolog\Logger;
 
+/**
+ * Decorator of PDOStatement that logs each executed query
+ */
 class LoggedPDOStatement extends PDOStatement
 {
     private PDOStatement $statement;
