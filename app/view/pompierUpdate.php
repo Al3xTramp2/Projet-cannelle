@@ -19,7 +19,7 @@
                     <a class="nav-link active" aria-current="page" href="index.php?c=pompier&amp;a=show">Pompiers</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link disabled" aria-disabled="true">Casernes</a>
+                    <a class="nav-link" href="index.php?c=caserne&amp;a=show">Casernes</a>
                 </li>
             </ul>
         </div>

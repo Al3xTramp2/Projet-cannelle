@@ -10,13 +10,26 @@ use Exception;
  */
 class Caserne extends \stdClass
 {
+    /** Names of the types of casernes indexed by their code */
+    public const TYPESCASERNES = [
+        "1" => "Pro",
+        "2" => "Mixte",
+        "3" => "Volontaire"
+    ];
+
+    /** Number of the caserne (primary key) */
     private int $NumCaserne;
+    /** Street address of the caserne */
     private string $Adresse;
+    /** Postal code of the caserne */
     private string $CP;
+    /** City of the caserne */
     private string $Ville;
+    /** Code of the type of the caserne */
     private int $CodeTypeC;
 
     /**
+     * Return the number of the caserne
      * @return int
      */
     public function getNumCaserne(): int
@@ -25,6 +38,7 @@ class Caserne extends \stdClass
     }
 
     /**
+     * Set the number of the caserne
      * @param int $NumCaserne
      * @return $this
      * @throws Exception
@@ -39,6 +53,7 @@ class Caserne extends \stdClass
     }
 
     /**
+     * Return the address of the caserne
      * @return string
      */
     public function getAdresse(): string
@@ -47,6 +62,7 @@ class Caserne extends \stdClass
     }
 
     /**
+     * Set the address of the caserne
      * @param string $Adresse
      * @return $this
      * @throws Exception
@@ -64,6 +80,7 @@ class Caserne extends \stdClass
     }
 
     /**
+     * Return the postal code of the caserne
      * @return string
      */
     public function getCP(): string
@@ -72,6 +89,7 @@ class Caserne extends \stdClass
     }
 
     /**
+     * Set the postal code of the caserne
      * @param string $CP
      * @return $this
      * @throws Exception
@@ -86,6 +104,7 @@ class Caserne extends \stdClass
     }
 
     /**
+     * Return the city of the caserne
      * @return string
      */
     public function getVille(): string
@@ -94,6 +113,7 @@ class Caserne extends \stdClass
     }
 
     /**
+     * Set the city of the caserne
      * @param string $Ville
      * @return $this
      * @throws Exception
@@ -111,6 +131,7 @@ class Caserne extends \stdClass
     }
 
     /**
+     * Return the code of the type of the caserne
      * @return int
      */
     public function getCodeTypeC(): int
@@ -119,16 +140,26 @@ class Caserne extends \stdClass
     }
 
     /**
+     * Set the code of the type of the caserne
      * @param int $CodeTypeC
      * @return $this
      * @throws Exception
      */
     public function setCodeTypeC(int $CodeTypeC): Caserne
     {
-        if (!in_array($CodeTypeC, [1, 2, 3])) {
+        if (!array_key_exists((string)$CodeTypeC, self::TYPESCASERNES)) {
             throw new Exception("Le code de type de caserne doit être '1', '2' ou '3' !");
         }
         $this->CodeTypeC = $CodeTypeC;
         return $this;
+    }
+
+    /**
+     * Return the name of the type of the Caserne according to its code
+     * @return string
+     */
+    public function getCodeTypeCName(): string
+    {
+        return self::TYPESCASERNES[(string)$this->CodeTypeC];
     }
 }

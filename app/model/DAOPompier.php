@@ -2,6 +2,7 @@
 
 namespace Supalta\Cannelle\model;
 
+use DateMalformedStringException;
 use DateTime;
 use Exception;
 use PDO;
@@ -11,6 +12,7 @@ use PDO;
  */
 class DAOPompier extends DAO
 {
+    /** Connection used to run the queries */
     private PDO $pdo;
 
     /**
@@ -39,6 +41,7 @@ class DAOPompier extends DAO
     }
 
     /**
+     * Constructor of the DAOPompier class
      * @param PDO $pdo
      */
     public function __construct(PDO $pdo)
@@ -191,6 +194,7 @@ class DAOPompier extends DAO
     }
 
     /**
+     * Return the amount of Pompiers
      * @return int
      */
     public function count(): int
@@ -214,6 +218,41 @@ class DAOPompier extends DAO
 
         $preparedStatement = $this->pdo->prepare($sql);
         $preparedStatement->bindValue("Name", $name, PDO::PARAM_STR);
+        $preparedStatement->execute();
+
+        $pompierList = [];
+        foreach ($preparedStatement->fetchAll(PDO::FETCH_ASSOC) as $line) {
+            $pompier = new Pompier();
+            $pompier->setMatricule($line['Matricule']);
+            $pompier->setPrenom($line['Prenom']);
+            $pompier->setNom($line['Nom']);
+            $pompier->setChefAgret($line['ChefAgret']);
+            $pompier->setDateNaissance(new DateTime($line['DateNaissance']));
+            $pompier->setNumCaserne($line['NumCaserne']);
+            $pompier->setCodeGrade($line['CodeGrade']);
+            $pompier->setMatriculeRespo($line['MatriculeRespo']);
+            $pompierList[] = $pompier;
+        }
+        return $pompierList;
+    }
+
+    /**
+     * Return all the Pompier entities of a Caserne with a limit of 100 by default
+     * @param int $numCaserne
+     * @param int $offset
+     * @param int $limit
+     * @return Pompier[]
+     * @throws Exception
+     */
+    public function findByCaserne(int $numCaserne, int $offset = 0, int $limit = 100): array
+    {
+        $sql = "SELECT * FROM pompiers WHERE NumCaserne = :NumCaserne AND Deleted = FALSE "
+            . "ORDER BY Matricule LIMIT :offset, :limit";
+
+        $preparedStatement = $this->pdo->prepare($sql);
+        $preparedStatement->bindValue("NumCaserne", $numCaserne, PDO::PARAM_INT);
+        $preparedStatement->bindValue("offset", $offset, PDO::PARAM_INT);
+        $preparedStatement->bindValue("limit", $limit, PDO::PARAM_INT);
         $preparedStatement->execute();
 
         $pompierList = [];
