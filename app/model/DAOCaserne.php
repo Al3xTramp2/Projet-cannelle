@@ -10,10 +10,11 @@ use PDO;
  */
 class DAOCaserne extends DAO
 {
+    /** Connection used to run the queries */
     private PDO $pdo;
 
     /**
-     * Geenerate a new key for the Caserne entity
+     * Generate a new key for the Caserne entity
      * @return int
      */
     private function keyGenerator(): int
@@ -31,6 +32,7 @@ class DAOCaserne extends DAO
     }
 
     /**
+     * Constructor of the DAOCaserne class
      * @param PDO $pdo
      */
     public function __construct(PDO $pdo)

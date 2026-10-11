@@ -15,7 +15,9 @@ use Exception;
  */
 class PompierController extends BaseController
 {
+    /** Data access object of the pompiers */
     private DAOPompier $daoPompier;
+    /** Data access object of the casernes */
     private DAOCaserne $daoCaserne;
 
     /**
@@ -30,6 +32,7 @@ class PompierController extends BaseController
     }
 
     /**
+     * Display the list of all the pompiers
      * @return void
      * @throws Exception
      */
@@ -42,6 +45,7 @@ class PompierController extends BaseController
     }
 
     /**
+     * Display the details of one pompier
      * @param string $data
      * @return void
      * @throws Exception
@@ -53,6 +57,7 @@ class PompierController extends BaseController
     }
 
     /**
+     * Display the form to create a pompier
      * @return void
      * @throws Exception
      */
@@ -64,6 +69,7 @@ class PompierController extends BaseController
     }
 
     /**
+     * Create the pompier from the form and display it
      * @param array<string, mixed> $data
      * @return void
      * @throws Exception
@@ -83,6 +89,7 @@ class PompierController extends BaseController
     }
 
     /**
+     * Display the form to update a pompier
      * @param string $data
      * @return void
      * @throws Exception
@@ -96,6 +103,7 @@ class PompierController extends BaseController
     }
 
     /**
+     * Update the pompier from the form and display it
      * @param array<string, mixed> $data
      * @return void
      * @throws Exception
@@ -115,6 +123,7 @@ class PompierController extends BaseController
     }
 
     /**
+     * Display the confirmation page before deleting a pompier
      * @param string $data
      * @return void
      * @throws Exception
@@ -126,6 +135,7 @@ class PompierController extends BaseController
     }
 
     /**
+     * Delete the pompier and display the list
      * @param array<string, mixed> $data
      * @return void
      * @throws Exception
@@ -138,6 +148,7 @@ class PompierController extends BaseController
     }
 
     /**
+     * Display the pompiers having the given name
      * @param string $data
      * @return void
      * @throws Exception

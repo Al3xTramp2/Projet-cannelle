@@ -12,11 +12,15 @@ use Monolog\Logger;
  */
 class LoggedPDOStatement extends PDOStatement
 {
+    /** Statement decorated by this class */
     private PDOStatement $statement;
+    /** Logger receiving the queries */
     private Logger $logger;
+    /** User written in each log line */
     private string $user;
 
     /**
+     * Constructor of the LoggedPDOStatement class
      * @param PDOStatement $statement
      * @param Logger $logger
      * @param string $user
@@ -29,6 +33,7 @@ class LoggedPDOStatement extends PDOStatement
     }
 
     /**
+     * Write the query, its params and its errors in the SQL log
      * @return void
      */
     private function logStatement(): void
@@ -44,12 +49,13 @@ class LoggedPDOStatement extends PDOStatement
         if ($this->statement->errorCode() !== PDO::ERR_NONE) {
             $errors = $this->statement->errorInfo();
             $this->logger->error($loggedLine . " - Errors : " . print_r($errors, true));
-        } else {
-            $this->logger->info($loggedLine);
+            return;
         }
+        $this->logger->info($loggedLine);
     }
 
     /**
+     * Execute the decorated statement then log it
      * @param array<int|string, mixed>|null $params
      * @return bool
      * @throws Exception
@@ -67,6 +73,7 @@ class LoggedPDOStatement extends PDOStatement
     }
 
     /**
+     * Bind a value to the decorated statement
      * @param int|string $param
      * @param mixed $value
      * @param int $type
@@ -78,6 +85,7 @@ class LoggedPDOStatement extends PDOStatement
     }
 
     /**
+     * Return all the rows of the decorated statement
      * @param int $mode
      * @param mixed ...$args
      * @return array<int, mixed>
@@ -88,6 +96,7 @@ class LoggedPDOStatement extends PDOStatement
     }
 
     /**
+     * Return the next row of the decorated statement
      * @param int $mode
      * @param int $cursorOrientation
      * @param int $cursorOffset
@@ -102,6 +111,7 @@ class LoggedPDOStatement extends PDOStatement
     }
 
     /**
+     * Return the next row of the decorated statement as an object
      * @param string|null $class
      * @param array<int, mixed> $constructorArgs
      * @return object|false
@@ -112,6 +122,7 @@ class LoggedPDOStatement extends PDOStatement
     }
 
     /**
+     * Return one column of the next row of the decorated statement
      * @param int $column
      * @return mixed
      */
@@ -121,6 +132,7 @@ class LoggedPDOStatement extends PDOStatement
     }
 
     /**
+     * Set the fetch mode of the decorated statement
      * @param $mode
      * @param ...$args
      * @return bool

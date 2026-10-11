@@ -10,6 +10,7 @@ use Exception;
 class Renderer
 {
     /**
+     * Compile the view into the cache, run it with the data and return the page
      * @param string $file
      * @param array<string, mixed>|null $data
      * @return string|false

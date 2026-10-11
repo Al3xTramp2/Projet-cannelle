@@ -11,6 +11,7 @@ use Exception;
  */
 class Pompier extends \stdClass
 {
+    /** Names of the grades indexed by their code */
     public const GRADES = [
         "1C" => "1ere classe",
         "AC" => "Adjudent Chef",
@@ -26,16 +27,25 @@ class Pompier extends \stdClass
         "SP" => "Sapeur"
     ];
 
+    /** Matricule of the pompier (primary key) */
     private string $Matricule;
+    /** First name of the pompier */
     private string $Prenom;
+    /** Last name of the pompier */
     private string $Nom;
+    /** Whether the pompier is a chef d'agret */
     private string $ChefAgret;
+    /** Date of birth of the pompier */
     private DateTime $DateNaissance;
+    /** Number of the caserne of the pompier, null if unassigned */
     private ?int $NumCaserne;
+    /** Code of the grade of the pompier */
     private string $CodeGrade;
+    /** Matricule of the superior, null if none */
     private ?string $MatriculeRespo;
 
     /**
+     * Return the matricule of the pompier
      * @return string
      */
     public function getMatricule(): string
@@ -44,6 +54,7 @@ class Pompier extends \stdClass
     }
 
     /**
+     * Set the matricule of the pompier
      * @param string $Matricule
      * @return $this
      * @throws Exception
@@ -64,6 +75,7 @@ class Pompier extends \stdClass
     }
 
     /**
+     * Return the first name of the pompier
      * @return string
      */
     public function getPrenom(): string
@@ -72,6 +84,7 @@ class Pompier extends \stdClass
     }
 
     /**
+     * Set the first name of the pompier
      * @param string $Prenom
      * @return $this
      * @throws Exception
@@ -89,6 +102,7 @@ class Pompier extends \stdClass
     }
 
     /**
+     * Return the last name of the pompier
      * @return string
      */
     public function getNom(): string
@@ -97,6 +111,7 @@ class Pompier extends \stdClass
     }
 
     /**
+     * Set the last name of the pompier
      * @param string $Nom
      * @return $this
      * @throws Exception
@@ -114,6 +129,7 @@ class Pompier extends \stdClass
     }
 
     /**
+     * Return the chef d'agret flag of the pompier
      * @return string
      */
     public function getChefAgret(): string
@@ -122,6 +138,7 @@ class Pompier extends \stdClass
     }
 
     /**
+     * Set the chef d'agret flag of the pompier
      * @param string $ChefAgret
      * @return $this
      * @throws Exception
@@ -136,6 +153,7 @@ class Pompier extends \stdClass
     }
 
     /**
+     * Return the date of birth of the pompier
      * @return DateTime
      */
     public function getDateNaissance(): DateTime
@@ -144,6 +162,7 @@ class Pompier extends \stdClass
     }
 
     /**
+     * Set the date of birth of the pompier
      * @param DateTime $DateNaissance
      * @return $this
      * @throws Exception
@@ -158,6 +177,7 @@ class Pompier extends \stdClass
     }
 
     /**
+     * Return the number of the caserne of the pompier
      * @return int|null
      */
     public function getNumCaserne(): ?int
@@ -166,6 +186,7 @@ class Pompier extends \stdClass
     }
 
     /**
+     * Set the number of the caserne of the pompier
      * @param int|null $NumCaserne
      * @return $this
      * @throws Exception
@@ -180,6 +201,7 @@ class Pompier extends \stdClass
     }
 
     /**
+     * Return the code of the grade of the pompier
      * @return string
      */
     public function getCodeGrade(): string
@@ -188,6 +210,7 @@ class Pompier extends \stdClass
     }
 
     /**
+     * Set the code of the grade of the pompier
      * @param string $CodeGrade
      * @return $this
      * @throws Exception
@@ -202,6 +225,7 @@ class Pompier extends \stdClass
     }
 
     /**
+     * Return the name of the grade of the pompier
      * @return string
      */
     public function getGrade(): string
@@ -210,6 +234,7 @@ class Pompier extends \stdClass
     }
 
     /**
+     * Return the matricule of the superior of the pompier
      * @return string|null
      */
     public function getMatriculeRespo(): ?string
@@ -219,6 +244,7 @@ class Pompier extends \stdClass
 
 
     /**
+     * Set the matricule of the superior of the pompier
      * @param string|null $MatriculeRespo
      * @return $this
      * @throws Exception

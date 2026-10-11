@@ -10,6 +10,7 @@ use PDO;
 class LoggedPDO extends PDO
 {
     /**
+     * Prepare the query and return it decorated so that it gets logged
      * @param string $query
      * @param array<int, mixed> $options
      * @return LoggedPDOStatement|false

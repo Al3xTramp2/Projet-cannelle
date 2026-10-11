@@ -9,6 +9,7 @@ use Exception;
  */
 class SingletonConfigReader
 {
+    /** Single instance of the class */
     private static SingletonConfigReader $instance;
     /** @var array<string, mixed> */
     private array $data;
@@ -20,15 +21,14 @@ class SingletonConfigReader
     private function __construct()
     {
         $path = __DIR__ . "/../../config.ini";
-        if (file_exists($path)) {
-            $parsed = parse_ini_file($path, true);
-            if ($parsed === false) {
-                throw new Exception("Impossible d'analyser le fichier '$path' !");
-            }
-            $this->data = $parsed;
-        } else {
+        if (!file_exists($path)) {
             throw new Exception("Le fichier de configuration n'existe pas !");
         }
+        $parsed = parse_ini_file($path, true);
+        if ($parsed === false) {
+            throw new Exception("Impossible d'analyser le fichier '$path' !");
+        }
+        $this->data = $parsed;
     }
 
     /**

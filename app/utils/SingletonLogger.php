@@ -13,8 +13,11 @@ use Monolog\Processor\WebProcessor;
  */
 class SingletonLogger
 {
+    /** Logger of the SQL queries */
     private ?Logger $sqlLogger = null;
+    /** Logger of the accesses */
     private ?Logger $accessLogger = null;
+    /** Single instance of the class */
     private static ?SingletonLogger $instance = null;
 
     /** @var array<string, string> */
@@ -30,6 +33,7 @@ class SingletonLogger
     ];
 
     /**
+     * Constructor of the SingletonLogger class
      * @throws Exception
      */
     private function __construct()
@@ -69,6 +73,7 @@ class SingletonLogger
     }
 
     /**
+     * Return the single instance, created on the first call
      * @return SingletonLogger
      */
     public static function getInstance(): SingletonLogger
@@ -80,6 +85,7 @@ class SingletonLogger
     }
 
     /**
+     * Return the logger of the SQL queries
      * @return Logger
      */
     public function getSQLLogger(): Logger
@@ -88,6 +94,7 @@ class SingletonLogger
     }
 
     /**
+     * Return the logger of the accesses
      * @return Logger
      */
     public function getAccessLogger(): Logger
