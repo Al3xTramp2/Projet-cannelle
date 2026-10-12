@@ -9,17 +9,17 @@
 <body>
 <nav class="navbar navbar-expand-lg bg-danger" data-bs-theme="dark">
     <div class="container">
-        <a class="navbar-brand" href="index.php?c=default&amp;a=home">Cannelle</a>
+        <a class="navbar-brand" href="/default/home">Cannelle</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menu" aria-controls="menu" aria-expanded="false" aria-label="Afficher le menu">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="menu">
             <ul class="navbar-nav me-auto">
                 <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="index.php?c=pompier&amp;a=show">Pompiers</a>
+                    <a class="nav-link active" aria-current="page" href="/pompier/liste">Pompiers</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="index.php?c=caserne&amp;a=show">Casernes</a>
+                    <a class="nav-link" href="/caserne/liste">Casernes</a>
                 </li>
             </ul>
         </div>
@@ -28,15 +28,15 @@
 <main class="container my-4">
     <div class="d-flex justify-content-between align-items-center mb-3">
         <h1 class="h3 mb-0">Pompiers ({{ $total }})</h1>
-        <a class="btn btn-danger" href="index.php?c=pompier&amp;a=create">Nouveau pompier</a>
+        <a class="btn btn-danger" href="/pompier/ajouter">Nouveau pompier</a>
     </div>
     <div class="table-responsive">
         <table class="table table-striped table-hover align-middle">
             <thead>
             <tr>
                 <th>Matricule</th>
-                <th>Nom</th>
                 <th>Prénom</th>
+                <th>Nom</th>
                 <th>Grade</th>
                 <th>Caserne</th>
                 <th></th>
@@ -46,14 +46,14 @@
             @foreach($pompiers as $pompier)
             <tr>
                 <td>{{ $pompier->getMatricule() }}</td>
-                <td>{{ $pompier->getNom() }}</td>
                 <td>{{ $pompier->getPrenom() }}</td>
+                <td>{{ $pompier->getNom() }}</td>
                 <td>{{ $pompier->getGrade() }}</td>
                 <td>{{ $pompier->getNumCaserne() }}</td>
                 <td class="text-end">
-                    <a class="btn btn-sm btn-outline-secondary" href="index.php?c=pompier&amp;a=detail&amp;matricule={{ $pompier->getMatricule() }}">Détail</a>
-                    <a class="btn btn-sm btn-outline-primary" href="index.php?c=pompier&amp;a=update&amp;matricule={{ $pompier->getMatricule() }}">Modifier</a>
-                    <a class="btn btn-sm btn-outline-danger" href="index.php?c=pompier&amp;a=delete&amp;matricule={{ $pompier->getMatricule() }}">Supprimer</a>
+                    <a class="btn btn-sm btn-outline-secondary" href="/pompier/matricule/{{ $pompier->getMatricule() }}">Détail</a>
+                    <a class="btn btn-sm btn-outline-primary" href="/pompier/modifier/{{ $pompier->getMatricule() }}">Modifier</a>
+                    <a class="btn btn-sm btn-outline-danger" href="/pompier/supprimer/{{ $pompier->getMatricule() }}">Supprimer</a>
                 </td>
             </tr>
             @endforeach

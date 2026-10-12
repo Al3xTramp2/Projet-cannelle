@@ -9,17 +9,17 @@
 <body>
 <nav class="navbar navbar-expand-lg bg-danger" data-bs-theme="dark">
     <div class="container">
-        <a class="navbar-brand" href="index.php?c=default&amp;a=home">Cannelle</a>
+        <a class="navbar-brand" href="/default/home">Cannelle</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menu" aria-controls="menu" aria-expanded="false" aria-label="Afficher le menu">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="menu">
             <ul class="navbar-nav me-auto">
                 <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="index.php?c=pompier&amp;a=show">Pompiers</a>
+                    <a class="nav-link active" aria-current="page" href="/pompier/liste">Pompiers</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="index.php?c=caserne&amp;a=show">Casernes</a>
+                    <a class="nav-link" href="/caserne/liste">Casernes</a>
                 </li>
             </ul>
         </div>
@@ -32,12 +32,9 @@
         </div>
         <div class="card-body">
             <p class="mb-3">Le pompier {{ $pompier->getMatricule() }} sera marqué comme supprimé.</p>
-            <form method="post" action="index.php">
-                <input type="hidden" name="c" value="pompier">
-                <input type="hidden" name="a" value="doDelete">
-                <input type="hidden" name="matricule" value="{{ $pompier->getMatricule() }}">
+            <form method="post" action="/pompier/delete/{{ $pompier->getMatricule() }}">
                 <button type="submit" class="btn btn-danger">Confirmer la suppression</button>
-                <a class="btn btn-outline-secondary" href="index.php?c=pompier&amp;a=show">Annuler</a>
+                <a class="btn btn-outline-secondary" href="/pompier/liste">Annuler</a>
             </form>
         </div>
     </div>

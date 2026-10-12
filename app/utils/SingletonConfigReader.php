@@ -10,6 +10,7 @@ use Exception;
 class SingletonConfigReader
 {
     private static SingletonConfigReader $instance;
+    
     /** @var array<string, mixed> */
     private array $data;
 

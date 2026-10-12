@@ -9,7 +9,7 @@
 <body>
 <nav class="navbar navbar-expand-lg bg-danger" data-bs-theme="dark">
     <div class="container">
-        <a class="navbar-brand" href="index.php?c=default&amp;a=home">Cannelle</a>
+        <a class="navbar-brand" href="/default/home">Cannelle</a>
 
         <button class="navbar-toggler" type="button"
                 data-bs-toggle="collapse" data-bs-target="#menu"
@@ -21,11 +21,11 @@
         <div class="collapse navbar-collapse" id="menu">
             <ul class="navbar-nav me-auto">
                 <li class="nav-item">
-                    <a class="nav-link" href="index.php?c=pompier&amp;a=show">Pompiers</a>
+                    <a class="nav-link" href="/pompier/liste">Pompiers</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link active" aria-current="page"
-                       href="index.php?c=caserne&amp;a=show">Casernes</a>
+                       href="/caserne/liste">Casernes</a>
                 </li>
             </ul>
         </div>
@@ -35,11 +35,9 @@
     <div class="d-flex justify-content-between align-items-center mb-3">
         <h1 class="h3 mb-0">Casernes ({{ $total }})</h1>
         <a class="btn btn-danger"
-           href="index.php?c=caserne&amp;a=create">Nouvelle caserne</a>
+           href="/caserne/ajouter">Nouvelle caserne</a>
     </div>
-    <form method="get" action="index.php" class="row g-2 mb-3">
-        <input type="hidden" name="c" value="caserne">
-        <input type="hidden" name="a" value="showByVille">
+    <form method="get" action="/caserne/ville" class="row g-2 mb-3">
         <div class="col-auto">
             <input type="text" class="form-control" name="ville" maxlength="20"
                    placeholder="Ville (nom exact)" aria-label="Ville" required>
@@ -70,11 +68,11 @@
                 <td>{{ $caserne->getType() }}</td>
                 <td class="text-end">
                     <a class="btn btn-sm btn-outline-secondary"
-                       href="index.php?c=caserne&amp;a=detail&amp;numCaserne={{ $caserne->getNumCaserne() }}">Détail</a>
+                       href="/caserne/detail/{{ $caserne->getNumCaserne() }}">Détail</a>
                     <a class="btn btn-sm btn-outline-primary"
-                       href="index.php?c=caserne&amp;a=update&amp;numCaserne={{ $caserne->getNumCaserne() }}">Modifier</a>
+                       href="/caserne/modifier/{{ $caserne->getNumCaserne() }}">Modifier</a>
                     <a class="btn btn-sm btn-outline-danger"
-                       href="index.php?c=caserne&amp;a=delete&amp;numCaserne={{ $caserne->getNumCaserne() }}">Supprimer</a>
+                       href="/caserne/supprimer/{{ $caserne->getNumCaserne() }}">Supprimer</a>
                 </td>
             </tr>
             @endforeach

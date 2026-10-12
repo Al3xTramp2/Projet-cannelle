@@ -19,4 +19,14 @@ class DefaultController extends BaseController
     {
         echo Renderer::render("home");
     }
+
+    /**
+     * Display the error page
+     * @return void
+     * @throws Exception
+     */
+    public function error(): void
+    {
+        echo Renderer::render("error");
+    }
 }
