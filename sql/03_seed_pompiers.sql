@@ -10,7 +10,7 @@ INSERT INTO pompiers (Matricule, Prenom, Nom, ChefAgret, DateNaissance, NumCaser
 ('Ma00007', 'Koba',        'LaD',         'N', '2002-05-28',  1, '1C', 'Ma00013'),
 ('Ma00008', 'Guillaume',   'Fontaine',    'N', '1995-02-04',  1, 'CC', 'Ma00002'),
 ('Ma00009', 'Karim',       'Benzema',     'N', '1999-05-05',  1, 'SP', 'Ma00022'),
-('Ma00010', 'Pierre',      'Dumont',      'N', '1989-12-11',  1, 'Ad', 'Ma00024'),
+('Ma00010', 'Zinedine',    'Zidane',      'N', '1989-12-11',  1, 'Ad', 'Ma00024'),
 ('Ma00011', 'Alexis',      'Garcia',      'N', '1988-01-09',  1, 'Ca', 'Ma00013'),
 ('Ma00012', 'Manon',       'Girard',      'N', '1994-11-28',  1, 'SP', 'Ma00002'),
 ('Ma00013', 'Jul',         'Lalien',      'O', '1973-11-21',  1, 'AC', 'Ma00013'),
