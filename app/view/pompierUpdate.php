@@ -71,7 +71,7 @@
         </div>
         <div class="col-12">
             <button type="submit" class="btn btn-danger">Enregistrer</button>
-            <a class="btn btn-outline-secondary" href="/pompier/matricule/{{ $pompier->getMatricule() }}">Annuler</a>
+            <a class="btn btn-outline-secondary" href="/pompier/detail?matricule={{ $pompier->getMatricule() }}">Annuler</a>
         </div>
     </form>
 </main>

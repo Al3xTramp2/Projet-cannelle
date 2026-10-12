@@ -36,21 +36,24 @@ class PompierController extends BaseController
      */
     public function show(): void
     {
+        $villes = [];
+        foreach ($this->daoCaserne->findAll(0, 1000) as $caserne) {
+            $villes[$caserne->getNumCaserne()] = $caserne->getVille();
+        }
         $pompiers = $this->daoPompier->findAll(0, 1000);
         $total = count($pompiers);
         $grades = Pompier::GRADES;
-        echo Renderer::render("pompierListe", compact('pompiers', 'total', 'grades'));
+        echo Renderer::render("pompierListe", compact('pompiers', 'villes', 'total', 'grades'));
     }
 
     /**
      * Display the details of one pompier
-     * @param string $data
      * @return void
      * @throws Exception
      */
-    public function detail(string $data): void
+    public function detail(): void
     {
-        $pompier = $this->daoPompier->find($data);
+        $pompier = $this->daoPompier->find($_GET['matricule']);
         echo Renderer::render("pompierDetail", compact('pompier'));
     }
 
@@ -68,33 +71,31 @@ class PompierController extends BaseController
 
     /**
      * Create the pompier from the form and display it
-     * @param array<string, mixed> $data
      * @return void
      * @throws Exception
      */
-    public function doCreate(array $data): void
+    public function doCreate(): void
     {
         $pompier = (new Pompier())
-            ->setPrenom($data['prenom'])
-            ->setNom($data['nom'])
-            ->setChefAgret($data['chefAgret'])
-            ->setDateNaissance(new DateTime($data['dateNaissance']))
-            ->setNumCaserne($data['numCaserne'])
-            ->setCodeGrade($data['codeGrade'])
-            ->setMatriculeRespo($data['matriculeRespo']);
+            ->setPrenom($_POST['prenom'])
+            ->setNom($_POST['nom'])
+            ->setChefAgret($_POST['chefAgret'])
+            ->setDateNaissance(new DateTime($_POST['dateNaissance']))
+            ->setNumCaserne($_POST['numCaserne'])
+            ->setCodeGrade($_POST['codeGrade'])
+            ->setMatriculeRespo($_POST['matriculeRespo']);
         $this->daoPompier->save($pompier);
-        $this->detail($pompier->getMatricule());
+        header("Location: /pompier/detail?matricule=" . $pompier->getMatricule());
     }
 
     /**
      * Display the form to update a pompier
-     * @param string $data
      * @return void
      * @throws Exception
      */
-    public function update(string $data): void
+    public function update(): void
     {
-        $pompier = $this->daoPompier->find($data);
+        $pompier = $this->daoPompier->find($_GET['matricule']);
         $casernes = $this->daoCaserne->findAll();
         $grades = Pompier::GRADES;
         echo Renderer::render("pompierUpdate", compact('pompier', 'casernes', 'grades'));
@@ -102,60 +103,60 @@ class PompierController extends BaseController
 
     /**
      * Update the pompier from the form and display it
-     * @param array<string, mixed> $data
      * @return void
      * @throws Exception
      */
-    public function doUpdate(array $data): void
+    public function doUpdate(): void
     {
-        $pompier = $this->daoPompier->find($data['matricule']);
-        $pompier->setPrenom($data['prenom'])
-            ->setNom($data['nom'])
-            ->setChefAgret($data['chefAgret'])
-            ->setDateNaissance(new DateTime($data['dateNaissance']))
-            ->setNumCaserne($data['numCaserne'])
-            ->setCodeGrade($data['codeGrade'])
-            ->setMatriculeRespo($data['matriculeRespo']);
+        $pompier = $this->daoPompier->find($_POST['matricule']);
+        $pompier->setPrenom($_POST['prenom'])
+            ->setNom($_POST['nom'])
+            ->setChefAgret($_POST['chefAgret'])
+            ->setDateNaissance(new DateTime($_POST['dateNaissance']))
+            ->setNumCaserne($_POST['numCaserne'])
+            ->setCodeGrade($_POST['codeGrade'])
+            ->setMatriculeRespo($_POST['matriculeRespo']);
         $this->daoPompier->update($pompier);
-        $this->detail($pompier->getMatricule());
+        header("Location: /pompier/detail?matricule=" . $pompier->getMatricule());
     }
 
     /**
      * Display the confirmation page before deleting a pompier
-     * @param string $data
      * @return void
      * @throws Exception
      */
-    public function delete(string $data): void
+    public function delete(): void
     {
-        $pompier = $this->daoPompier->find($data);
+        $pompier = $this->daoPompier->find($_GET['matricule']);
         echo Renderer::render("pompierDelete", compact('pompier'));
     }
 
     /**
-     * Delete the pompier and display the list
-     * @param string $data
+     * Delete the pompier and redirect to the list
      * @return void
      * @throws Exception
      */
-    public function doDelete(string $data): void
+    public function doDelete(): void
     {
-        $pompier = $this->daoPompier->find($data);
+        $pompier = $this->daoPompier->find($_POST['matricule']);
         $this->daoPompier->delete($pompier);
-        $this->show();
+        header('Location: /pompier/liste');
     }
 
     /**
      * Display the pompiers having the given name
-     * @param string $data
      * @return void
      * @throws Exception
      */
-    public function showByName(string $data): void
+    public function showByName(): void
     {
-        $pompiers = $this->daoPompier->findByName($data);
+        $villes = [];
+        foreach ($this->daoCaserne->findAll(0, 1000) as $caserne) {
+            $villes[$caserne->getNumCaserne()] = $caserne->getVille();
+        }
+        $pompiers = $this->daoPompier->findByName($_GET['nom']);
         $total = count($pompiers);
         $grades = Pompier::GRADES;
-        echo Renderer::render("pompierListe", compact('pompiers', 'total', 'grades'));
+        echo Renderer::render("pompierListe", compact('pompiers', 'villes', 'total', 'grades'));
     }
 }

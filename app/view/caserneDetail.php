@@ -64,7 +64,7 @@
             <a class="btn btn-outline-secondary"
                href="/caserne/liste">Retour à la liste</a>
             <a class="btn btn-outline-primary"
-               href="/caserne/modifier/{{ $caserne->getNumCaserne() }}">Modifier</a>
+               href="/caserne/modifier?numCaserne={{ $caserne->getNumCaserne() }}">Modifier</a>
         </div>
     </div>
 </main>

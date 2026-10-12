@@ -39,13 +39,12 @@ class CaserneController extends BaseController
 
     /**
      * Display the details of one caserne
-     * @param string $data
      * @return void
      * @throws Exception
      */
-    public function detail(string $data): void
+    public function detail(): void
     {
-        $caserne = $this->daoCaserne->find((int) $data);
+        $caserne = $this->daoCaserne->find((int) $_GET['numCaserne']);
         echo Renderer::render('caserneDetail', compact('caserne'));
     }
 
@@ -62,85 +61,79 @@ class CaserneController extends BaseController
 
     /**
      * Create the caserne from the form and display it
-     * @param array<string, mixed> $data
      * @return void
      * @throws Exception
      */
-    public function doCreate(array $data): void
+    public function doCreate(): void
     {
         $caserne = (new Caserne())
-            ->setAdresse($data['adresse'])
-            ->setCP($data['cp'])
-            ->setVille($data['ville'])
-            ->setCodeTypeC($data['codeTypeC']);
+            ->setAdresse($_POST['adresse'])
+            ->setCP($_POST['cp'])
+            ->setVille($_POST['ville'])
+            ->setCodeTypeC($_POST['codeTypeC']);
         $this->daoCaserne->save($caserne);
-        $this->detail((string) $caserne->getNumCaserne());
+        header("Location: /caserne/detail?numCaserne=" . $caserne->getNumCaserne());
     }
 
     /**
      * Display the form to update a caserne
-     * @param string $data
      * @return void
      * @throws Exception
      */
-    public function update(string $data): void
+    public function update(): void
     {
-        $caserne = $this->daoCaserne->find((int) $data);
+        $caserne = $this->daoCaserne->find((int) $_GET['numCaserne']);
         $types = Caserne::TYPES;
         echo Renderer::render('caserneUpdate', compact('caserne', 'types'));
     }
 
     /**
      * Update the caserne from the form and display it
-     * @param array<string, mixed> $data
      * @return void
      * @throws Exception
      */
-    public function doUpdate(array $data): void
+    public function doUpdate(): void
     {
-        $caserne = $this->daoCaserne->find((int) $data['numCaserne']);
-        $caserne->setAdresse($data['adresse'])
-            ->setCP($data['cp'])
-            ->setVille($data['ville'])
-            ->setCodeTypeC($data['codeTypeC']);
+        $caserne = $this->daoCaserne->find((int) $_POST['numCaserne']);
+        $caserne->setAdresse($_POST['adresse'])
+            ->setCP($_POST['cp'])
+            ->setVille($_POST['ville'])
+            ->setCodeTypeC($_POST['codeTypeC']);
         $this->daoCaserne->update($caserne);
-        $this->detail((string) $caserne->getNumCaserne());
+        header("Location : /caserne/detail?numCaserne=" . $caserne->getNumCaserne());
     }
 
     /**
      * Display the confirmation page before deleting a caserne
-     * @param string $data
      * @return void
      * @throws Exception
      */
-    public function delete(string $data): void
+    public function delete(): void
     {
-        $caserne = $this->daoCaserne->find((int) $data);
+        $caserne = $this->daoCaserne->find((int) $_GET['numCaserne']);
         echo Renderer::render('caserneDelete', compact('caserne'));
     }
 
     /**
-     * Delete the caserne and display the list
-     * @param string $data
+     * Delete the caserne and redirect to the list
      * @return void
      * @throws Exception
      */
-    public function doDelete(string $data): void
+    public function doDelete(): void
     {
-        $caserne = $this->daoCaserne->find((int) $data);
+        $caserne = $this->daoCaserne->find((int) $_POST['numCaserne']);
         $this->daoCaserne->delete($caserne);
-        $this->show();
+        header('Location: /caserne/liste');
     }
 
     /**
      * Display the casernes located in the given city
-     * @param string $data
      * @return void
      * @throws Exception
      */
-    public function showByVille(string $data): void
+    public function showByVille(): void
     {
-        $casernes = $this->daoCaserne->findByVille($data);
+        $casernes = $this->daoCaserne->findByVille($_GET['ville']);
         $total = count($casernes);
         echo Renderer::render('caserneListe', compact('casernes', 'total'));
     }

@@ -49,7 +49,8 @@
                 Les pompiers affectés à cette caserne seront détachés de celle-ci.
             </p>
 
-            <form method="post" action="/caserne/delete/{{ $caserne->getNumCaserne() }}">
+            <form method="post" action="/caserne/delete">
+                <input type="hidden" name="numCaserne" value="{{ $caserne->getNumCaserne() }}">
 
                 <button type="submit" class="btn btn-danger">
                     Confirmer la suppression

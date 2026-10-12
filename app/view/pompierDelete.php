@@ -32,7 +32,8 @@
         </div>
         <div class="card-body">
             <p class="mb-3">Le pompier {{ $pompier->getMatricule() }} sera marqué comme supprimé.</p>
-            <form method="post" action="/pompier/delete/{{ $pompier->getMatricule() }}">
+            <form method="post" action="/pompier/delete">
+                <input type="hidden" name="matricule" value="{{ $pompier->getMatricule() }}">
                 <button type="submit" class="btn btn-danger">Confirmer la suppression</button>
                 <a class="btn btn-outline-secondary" href="/pompier/liste">Annuler</a>
             </form>

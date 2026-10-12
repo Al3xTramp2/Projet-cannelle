@@ -26,7 +26,7 @@ $control = array_shift($fragments);
 switch ($control) {
     case '' :
     { //l'url est /
-        defaultRoutes_get($fragments);
+        defaultRoutes_get(["home"]);
         break;
     }
     case "pompier" :
@@ -98,7 +98,7 @@ function pompierRoutes_get($fragments)
             call_user_func_array([ new PompierController(), "show"], $fragments);
             break;
         }
-        case "matricule" :
+        case "detail" :
         {
             call_user_func_array([ new PompierController(), "detail"], $fragments);
             break;
@@ -118,6 +118,11 @@ function pompierRoutes_get($fragments)
             call_user_func_array([new PompierController(), "update"], $fragments);
             break;
         }
+        case "nom" :
+        {
+            call_user_func_array([new PompierController(), "showByName"], $fragments);
+            break;
+        }
 
         default :
         {
@@ -133,13 +138,13 @@ function pompierRoutes_post($fragments)
     $action = array_shift($fragments);
     switch ($action) {
         case "add":
-            call_user_func_array([new PompierController(), "do_create"], $fragments);
+            call_user_func_array([new PompierController(), "doCreate"], $fragments);
             break;
         case "delete":
-            call_user_func_array([new PompierController(), "do_delete"], $fragments);
+            call_user_func_array([new PompierController(), "doDelete"], $fragments);
             break;
         case "update" :
-            call_user_func_array([new PompierController(), "do_update"], $fragments);
+            call_user_func_array([new PompierController(), "doUpdate"], $fragments);
             break;
         default:
             echo "Action '$action' non defini <hr>";
@@ -166,6 +171,9 @@ function caserneRoutes_get($fragments)
         case "supprimer" :
             call_user_func_array([new CaserneController(), "delete"], $fragments);
             break;
+        case "ville" :
+            call_user_func_array([new CaserneController(), "showByVille"], $fragments);
+            break;
         default:
             echo "Action '$action' non defini <hr>";
             break;
@@ -177,13 +185,13 @@ function caserneRoutes_post($fragments)
     $action = array_shift($fragments);
     switch ($action) {
         case "add" :
-            call_user_func_array([new CaserneController(), "do_add"], $fragments);
+            call_user_func_array([new CaserneController(), "doCreate"], $fragments);
             break;
         case "delete" :
-            call_user_func_array([new CaserneController(), "do_delete"], $fragments);
+            call_user_func_array([new CaserneController(), "doDelete"], $fragments);
             break;
         case "update" :
-            call_user_func_array([new CaserneController(), "do_update"], $fragments);
+            call_user_func_array([new CaserneController(), "doUpdate"], $fragments);
             break;
         default:
             break;

@@ -73,7 +73,7 @@
         <div class="col-12">
             <button type="submit" class="btn btn-danger">Enregistrer</button>
             <a class="btn btn-outline-secondary"
-               href="/caserne/detail/{{ $caserne->getNumCaserne() }}">Annuler</a>
+               href="/caserne/detail?numCaserne={{ $caserne->getNumCaserne() }}">Annuler</a>
         </div>
     </form>
 </main>

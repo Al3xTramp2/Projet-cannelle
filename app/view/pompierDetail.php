@@ -48,7 +48,7 @@
         </div>
         <div class="card-footer">
             <a class="btn btn-outline-secondary" href="/pompier/liste">Retour à la liste</a>
-            <a class="btn btn-outline-primary" href="/pompier/modifier/{{ $pompier->getMatricule() }}">Modifier</a>
+            <a class="btn btn-outline-primary" href="/pompier/modifier?matricule={{ $pompier->getMatricule() }}">Modifier</a>
         </div>
     </div>
 </main>

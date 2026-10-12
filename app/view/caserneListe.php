@@ -50,6 +50,7 @@
         <table class="table table-striped table-hover align-middle">
             <thead>
             <tr>
+                <th>#</th>
                 <th>Numéro</th>
                 <th>Adresse</th>
                 <th>Code postal</th>
@@ -59,8 +60,9 @@
             </tr>
             </thead>
             <tbody>
-            @foreach($casernes as $caserne)
+            @foreach($casernes as $index => $caserne)
             <tr>
+                <td>{{ $index + 1 }}</td>
                 <td>{{ $caserne->getNumCaserne() }}</td>
                 <td>{{ $caserne->getAdresse() }}</td>
                 <td>{{ $caserne->getCP() }}</td>
@@ -68,11 +70,11 @@
                 <td>{{ $caserne->getType() }}</td>
                 <td class="text-end">
                     <a class="btn btn-sm btn-outline-secondary"
-                       href="/caserne/detail/{{ $caserne->getNumCaserne() }}">Détail</a>
+                       href="/caserne/detail?numCaserne={{ $caserne->getNumCaserne() }}">Détail</a>
                     <a class="btn btn-sm btn-outline-primary"
-                       href="/caserne/modifier/{{ $caserne->getNumCaserne() }}">Modifier</a>
+                       href="/caserne/modifier?numCaserne={{ $caserne->getNumCaserne() }}">Modifier</a>
                     <a class="btn btn-sm btn-outline-danger"
-                       href="/caserne/supprimer/{{ $caserne->getNumCaserne() }}">Supprimer</a>
+                       href="/caserne/supprimer?numCaserne={{ $caserne->getNumCaserne() }}">Supprimer</a>
                 </td>
             </tr>
             @endforeach
