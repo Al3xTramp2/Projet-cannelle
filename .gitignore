@@ -2,6 +2,7 @@
 
 /vendor/
 /storage/
+/.phpunit.cache/
 
 /phpDocumentor.phar
 /.phpdoc/
