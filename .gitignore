@@ -1,8 +1,9 @@
 .idea/
+.phpunit.cache/
 
 /vendor/
 /storage/
-/.phpunit.cache/
+
 
 /phpDocumentor.phar
 /.phpdoc/

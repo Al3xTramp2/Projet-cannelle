@@ -4,6 +4,5 @@ namespace Supalta\Cannelle\utils\validators;
 
 interface InterfaceValidator
 {
-    public function validate($code) : bool;
-
+    public function validate(string|int $code): bool;
 }

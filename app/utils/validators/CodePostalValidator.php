@@ -4,8 +4,7 @@ namespace Supalta\Cannelle\utils\validators;
 
 class CodePostalValidator implements InterfaceValidator
 {
-
-    public function validate($code): bool
+    public function validate(string|int $code): bool
     {
         if (mb_strlen($code) !== 5) {
             return false;
@@ -19,7 +18,7 @@ class CodePostalValidator implements InterfaceValidator
             return $last >= 0 && $last <= 999;
         }
 
-        if ($depOM >= 971 && $depOM <= 988) {
+        if (($depOM >= 971 && $depOM <= 978) || ($depOM >= 986 && $depOM <= 989)) {
             $last = (int) substr($code, 3, 2);
             return $last >= 0 && $last <= 99;
         }
