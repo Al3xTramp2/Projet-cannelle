@@ -10,7 +10,7 @@ use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 use Supalta\Cannelle\utils\validators\CodePostalValidator;
 
-class CodePostalValidatorTest extends TestCase
+class eCodePostalValidatorTest extends TestCase
 {
 
     private CodePostalValidator $validator;
