@@ -51,7 +51,8 @@
         "phpmetrics": "./vendor/bin/phpmetrics --report-html=storage/phpmetrics/ app",
         "dbreset": "cat sql/01_structure.sql sql/02_seed_casernes.sql sql/03_seed_pompiers.sql sql/04_safe_delete.sql | mariadb -u root -p",
         "phpmd": "./vendor/bin/phpmd analyze app --format text --reportfile-html storage/phpmd.html",
-        "phpdoc": "php phpDocumentor.phar run -d app -t storage/docs --cache-folder storage/phpdoc-cache --title Cannelle"
+        "phpdoc": "php phpDocumentor.phar run -d app -t storage/docs --cache-folder storage/phpdoc-cache --title Cannelle",
+        "phpunit": "./vendor/bin/phpunit --color=always tests"
     },
     "scripts-descriptions": {
         "serve": "Démarre le serveur PHP local sur le port 8080 depuis le dossier public.",

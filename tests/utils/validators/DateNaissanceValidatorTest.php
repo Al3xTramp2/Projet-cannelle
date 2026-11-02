@@ -82,5 +82,6 @@ class DateNaissanceValidatorTest extends TestCase
     #[AfterClass]
     public static function tearDownAfterClass(): void
     {
+        self::fail("Not implemented yet");
     }
 }

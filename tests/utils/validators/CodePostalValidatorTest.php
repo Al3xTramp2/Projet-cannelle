@@ -10,7 +10,7 @@ use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 use Supalta\Cannelle\utils\validators\CodePostalValidator;
 
-class eCodePostalValidatorTest extends TestCase
+class CodePostalValidatorTest extends TestCase
 {
 
     private CodePostalValidator $validator;
@@ -76,5 +76,6 @@ class eCodePostalValidatorTest extends TestCase
     #[AfterClass]
     public static function tearDownAfterClass(): void
     {
+        self::fail("Not implemented yet");
     }
 }
