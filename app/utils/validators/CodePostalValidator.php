@@ -2,8 +2,16 @@
 
 namespace Supalta\Cannelle\utils\validators;
 
+/**
+ * Validates a French postal code (department or overseas territory)
+ */
 class CodePostalValidator implements InterfaceValidator
 {
+    /**
+     * Check that the code has 5 characters and a known department prefix
+     * @param string|int $code
+     * @return bool
+     */
     public function validate(string|int $code): bool
     {
         if (mb_strlen($code) !== 5) {

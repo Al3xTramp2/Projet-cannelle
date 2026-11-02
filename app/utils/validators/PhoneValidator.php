@@ -2,8 +2,16 @@
 
 namespace Supalta\Cannelle\utils\validators;
 
+/**
+ * Validates a phone number (10 digits, or a known international prefix and 9 digits)
+ */
 class PhoneValidator implements InterfaceValidator
 {
+    /**
+     * Check the prefix and the digits of the number, and refuse a single repeated digit
+     * @param string $tel
+     * @return bool
+     */
     public function validate($tel): bool
     {
         $itiExistant = [

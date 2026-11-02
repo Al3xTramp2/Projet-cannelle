@@ -4,6 +4,9 @@ namespace Supalta\Cannelle\utils\validators;
 
 use DateTime;
 
+/**
+ * Validates the birth date of a pompier (format Y-m-d)
+ */
 class DateNaissanceValidator implements InterfaceValidator
 {
     /**

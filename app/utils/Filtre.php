@@ -5,7 +5,7 @@ namespace Supalta\Cannelle\utils;
 use Supalta\Cannelle\utils\validators\InterfaceValidator;
 
 /**
- * Keeps the values accepted by the validator of their key (a value without validator is kept)
+ * Tells for each registered key whether its value is accepted by its validator
  */
 class Filtre
 {
@@ -24,21 +24,18 @@ class Filtre
     }
 
     /**
-     * Return the entries of the array whose value is accepted
+     * Return for each registered key whether its value is valid (false if the key is missing)
      * @param array<string, mixed> $data
-     * @return array<string, mixed>
+     * @return array<string, bool>
      */
     public function visit(array $data): array
     {
         $result = [];
-        foreach ($data as $key => $value) {
-            if (isset($this->validators[$key])) {
-                $validator = $this->validators[$key];
-                if ($validator->validate($value)) {
-                    $result[$key] = $value;
-                }
+        foreach ($this->validators as $key => $validator) {
+            if (isset($data[$key])) {
+                $result[$key] = $validator->validate($data[$key]);
             } else {
-                $result[$key] = $value;
+                $result[$key] = false;
             }
         }
         return $result;
