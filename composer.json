@@ -64,6 +64,7 @@
         "phpmetrics": "Génère un rapport HTML sur la complexité et la maintenabilité du code de app dans storage/phpmetrics/.",
         "dbreset": "Permet de réinitialiser la BDD avec les valeurs d'origines écrites en brut dans les fichiers SQL.",
         "phpmd": "Détecte les mauvaises pratiques avec PHPMD, rapport HTML dans storage/phpmd.html.",
-        "phpdoc": "Génère la documentation du code dans storage/docs avec phpDocumentor."
+        "phpdoc": "Génère la documentation du code dans storage/docs avec phpDocumentor.",
+        "phpunit": "Exécute tout les test unitaires présent dans le dossier tests avec PHPUnit"
     }
 }
