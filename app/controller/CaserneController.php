@@ -4,7 +4,9 @@ namespace Supalta\Cannelle\controller;
 
 use Supalta\Cannelle\model\Caserne;
 use Supalta\Cannelle\model\DAOCaserne;
+use Supalta\Cannelle\utils\Filtre;
 use Supalta\Cannelle\utils\Renderer;
+use Supalta\Cannelle\utils\validators\CodePostalValidator;
 use Supalta\Cannelle\utils\SingletonDataBaseMariaDB;
 use Exception;
 
@@ -14,6 +16,7 @@ use Exception;
 class CaserneController extends BaseController
 {
     private DAOCaserne $daoCaserne;
+    private Filtre $filtre;
 
     /**
      * Constructor of the CaserneController class
@@ -23,6 +26,8 @@ class CaserneController extends BaseController
         parent::__construct();
         $pdo = SingletonDataBaseMariaDB::getInstance()->getLoggedPDO();
         $this->daoCaserne = new DAOCaserne($pdo);
+        $this->filtre = new Filtre();
+        $this->filtre->accept("cp", new CodePostalValidator());
     }
 
     /**
@@ -66,6 +71,14 @@ class CaserneController extends BaseController
      */
     public function doCreate(): void
     {
+        $resultat = $this->filtre->visit($_POST);
+        if (!$resultat["cp"]) {
+            $types = Caserne::TYPES;
+            $erreur = true;
+            echo Renderer::render('caserneCreate', compact('types', 'erreur'));
+            return;
+        }
+
         $caserne = (new Caserne())
             ->setAdresse($_POST['adresse'])
             ->setCP($_POST['cp'])
@@ -95,6 +108,15 @@ class CaserneController extends BaseController
     public function doUpdate(): void
     {
         $caserne = $this->daoCaserne->find((int) $_POST['numCaserne']);
+
+        $resultat = $this->filtre->visit($_POST);
+        if (!$resultat["cp"]) {
+            $types = Caserne::TYPES;
+            $erreur = true;
+            echo Renderer::render('caserneUpdate', compact('caserne', 'types', 'erreur'));
+            return;
+        }
+
         $caserne->setAdresse($_POST['adresse'])
             ->setCP($_POST['cp'])
             ->setVille($_POST['ville'])

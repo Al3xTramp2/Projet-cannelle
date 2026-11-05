@@ -27,6 +27,9 @@
 </nav>
 <main class="container my-4">
     <h1 class="h3 mb-3">Nouveau pompier</h1>
+    @if(isset($erreur))
+    <div class="alert alert-danger">Date de naissance invalide (pompier de 18 à 60 ans).</div>
+    @endif
     <form method="post" action="/pompier/add" class="row g-3">
 
         <div class="col-md-6">

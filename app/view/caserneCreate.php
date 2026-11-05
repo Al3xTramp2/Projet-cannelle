@@ -35,6 +35,9 @@
 
 <main class="container my-4">
     <h1 class="h3 mb-3">Nouvelle caserne</h1>
+    @if(isset($erreur))
+    <div class="alert alert-danger">Code postal invalide.</div>
+    @endif
 
     <form method="post" action="/caserne/add" class="row g-3">
 

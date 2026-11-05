@@ -37,6 +37,9 @@
     <h1 class="h3 mb-3">
         Modifier la caserne n° {{ $caserne->getNumCaserne() }}
     </h1>
+    @if(isset($erreur))
+    <div class="alert alert-danger">Code postal invalide.</div>
+    @endif
 
     <form method="post" action="/caserne/update" class="row g-3">
         <input type="hidden" name="numCaserne"

@@ -5,7 +5,9 @@ namespace Supalta\Cannelle\controller;
 use Supalta\Cannelle\model\DAOCaserne;
 use Supalta\Cannelle\model\DAOPompier;
 use Supalta\Cannelle\model\Pompier;
+use Supalta\Cannelle\utils\Filtre;
 use Supalta\Cannelle\utils\Renderer;
+use Supalta\Cannelle\utils\validators\DateNaissanceValidator;
 use Supalta\Cannelle\utils\SingletonDataBaseMariaDB;
 use DateTime;
 use Exception;
@@ -17,6 +19,7 @@ class PompierController extends BaseController
 {
     private DAOPompier $daoPompier;
     private DAOCaserne $daoCaserne;
+    private Filtre $filtre;
 
     /**
      * Constructor of the PompierController class
@@ -27,6 +30,8 @@ class PompierController extends BaseController
         $pdo = SingletonDataBaseMariaDB::getInstance()->getLoggedPDO();
         $this->daoPompier = new DAOPompier($pdo);
         $this->daoCaserne = new DAOCaserne($pdo);
+        $this->filtre = new Filtre();
+        $this->filtre->accept("dateNaissance", new DateNaissanceValidator());
     }
 
     /**
@@ -76,6 +81,15 @@ class PompierController extends BaseController
      */
     public function doCreate(): void
     {
+        $resultat = $this->filtre->visit($_POST);
+        if (!$resultat["dateNaissance"]) {
+            $casernes = $this->daoCaserne->findAll();
+            $grades = Pompier::GRADES;
+            $erreur = true;
+            echo Renderer::render("pompierCreate", compact('casernes', 'grades', 'erreur'));
+            return;
+        }
+
         $pompier = (new Pompier())
             ->setPrenom($_POST['prenom'])
             ->setNom($_POST['nom'])
@@ -109,6 +123,16 @@ class PompierController extends BaseController
     public function doUpdate(): void
     {
         $pompier = $this->daoPompier->find($_POST['matricule']);
+
+        $resultat = $this->filtre->visit($_POST);
+        if (!$resultat["dateNaissance"]) {
+            $casernes = $this->daoCaserne->findAll();
+            $grades = Pompier::GRADES;
+            $erreur = true;
+            echo Renderer::render("pompierUpdate", compact('pompier', 'casernes', 'grades', 'erreur'));
+            return;
+        }
+
         $pompier->setPrenom($_POST['prenom'])
             ->setNom($_POST['nom'])
             ->setChefAgret($_POST['chefAgret'])

@@ -27,6 +27,9 @@
 </nav>
 <main class="container my-4">
     <h1 class="h3 mb-3">Modifier {{ $pompier->getMatricule() }}</h1>
+    @if(isset($erreur))
+    <div class="alert alert-danger">Date de naissance invalide (pompier de 18 à 60 ans).</div>
+    @endif
     <form method="post" action="/pompier/update" class="row g-3">
         <input type="hidden" name="matricule" value="{{ $pompier->getMatricule() }}">
 
