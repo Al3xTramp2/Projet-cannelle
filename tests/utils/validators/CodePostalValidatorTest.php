@@ -15,13 +15,11 @@ class CodePostalValidatorTest extends TestCase
 
     private CodePostalValidator $validator;
 
-    #[BeforeClass]
     public static function setUpBeforeClass(): void
     {
         fwrite(STDOUT, "method : " . __METHOD__ . " line : " . __LINE__ . " \n IT WORKS \n ");
     }
 
-    #[Before]
     public function setUp(): void
     {
         parent::setUp();
@@ -31,7 +29,16 @@ class CodePostalValidatorTest extends TestCase
     /**
      * @return void
      */
-    #[Test]
+    public function testPostalCodeHasOnlyDigits(): void
+    {
+        $this->assertFalse($this->validator->validate("12abc"));
+        $this->assertFalse($this->validator->validate("1 200"));
+        $this->assertFalse($this->validator->validate("-1200"));
+    }
+
+    /**
+     * @return void
+     */
     public function testPostalCodeHas5Characters(): void
     {
         $this->assertTrue($this->validator->validate("69200"));
@@ -43,7 +50,6 @@ class CodePostalValidatorTest extends TestCase
     /**
      * @return void
      */
-    #[Test]
     public function testMetropolitanDepartements(): void
     {
         $this->assertTrue($this->validator->validate("01000"));
@@ -57,7 +63,6 @@ class CodePostalValidatorTest extends TestCase
     /**
      * @return void
      */
-    #[Test]
     public function testOverseasDepartements(): void
     {
         $this->assertTrue($this->validator->validate("97100"));
@@ -66,14 +71,11 @@ class CodePostalValidatorTest extends TestCase
         $this->assertFalse($this->validator->validate("97900"));
     }
 
-
-    #[After]
     public function tearDown(): void
     {
         parent::tearDown();
     }
 
-    #[AfterClass]
     public static function tearDownAfterClass(): void
     {
     }

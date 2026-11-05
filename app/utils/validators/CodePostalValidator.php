@@ -14,7 +14,7 @@ class CodePostalValidator implements InterfaceValidator
      */
     public function validate(string|int $code): bool
     {
-        if (mb_strlen($code) !== 5) {
+        if (mb_strlen($code) !== 5 || !ctype_digit($code)) {
             return false;
         }
 

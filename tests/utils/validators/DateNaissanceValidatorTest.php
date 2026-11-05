@@ -15,13 +15,11 @@ class DateNaissanceValidatorTest extends TestCase
 {
     private DateNaissanceValidator $validator;
 
-    #[BeforeClass]
     public static function setUpBeforeClass(): void
     {
         fwrite(STDOUT, "method : " . __METHOD__ . " line : " . __LINE__ . " \n IT WORKS \n ");
     }
 
-    #[Before]
     public function setUp(): void
     {
         parent::setUp();
@@ -31,7 +29,6 @@ class DateNaissanceValidatorTest extends TestCase
     /**
      * @return void
      */
-    #[Test]
     public function testDateFormat(): void
     {
         $this->assertFalse($this->validator->validate("01/01/1990"));
@@ -45,7 +42,6 @@ class DateNaissanceValidatorTest extends TestCase
     /**
      * @return void
      */
-    #[Test]
     public function testDateExists(): void
     {
         $this->assertFalse($this->validator->validate("2021-02-31"));
@@ -56,7 +52,6 @@ class DateNaissanceValidatorTest extends TestCase
     /**
      * @return void
      */
-    #[Test]
     public function testPersonIs18OrOlder(): void
     {
         $this->assertTrue($this->validator->validate("2007-01-01"));
@@ -66,20 +61,17 @@ class DateNaissanceValidatorTest extends TestCase
     /**
      * @return void
      */
-    #[Test]
     public function testPersonIs60OrYounger(): void
     {
         $this->assertTrue($this->validator->validate("1980-01-01"));
         $this->assertFalse($this->validator->validate("1960-01-01"));
     }
 
-    #[After]
     public function tearDown(): void
     {
         parent::tearDown();
     }
 
-    #[AfterClass]
     public static function tearDownAfterClass(): void
     {
     }

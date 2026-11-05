@@ -21,13 +21,11 @@ class FiltreTest extends TestCase
     private Filtre $filtre;
     private array $validators;
 
-    #[BeforeClass]
     public static function setUpBeforeClass(): void
     {
         fwrite(STDOUT, "method : " . __METHOD__ . " line : " . __LINE__ . " \n IT WORKS \n ");
     }
 
-    #[Before]
     public function setUp(): void
     {
         parent::setUp();
@@ -41,7 +39,6 @@ class FiltreTest extends TestCase
         ];
     }
 
-    #[Test]
     public function testPhoneMail(): void{
         $this->filtre->accept("Phone", $this->validators["Phone"]);
         $this->filtre->accept("Mail", $this->validators["Mail"]);
@@ -51,7 +48,6 @@ class FiltreTest extends TestCase
         $this->assertTrue($result["Mail"]);
     }
 
-    #[Test]
     public function testPhoneMailInverted(): void{
         $this->filtre->accept("Mail", $this->validators["Mail"]);
         $this->filtre->accept("Phone", $this->validators["Phone"]);
@@ -61,7 +57,6 @@ class FiltreTest extends TestCase
         $this->assertTrue($result["Phone"]);
     }
 
-    #[Test]
     public function testAllValidatorsAndAllKeys(): void{
         $this->filtre->accept("CP", $this->validators["CP"]);
         $this->filtre->accept("DateNaissance", $this->validators["DateNaissance"]);
@@ -77,14 +72,12 @@ class FiltreTest extends TestCase
         $this->assertTrue($result["CP"]);
     }
 
-    #[Test]
     public function testNoValidatorsAndAllKeys(): void{
         $array = ["CP"=>"69200","DateNaissance"=>"2007-01-01","Mail"=>"test.com","Phone"=>"+33760335117","Password"=>"123456789+Aze"];
         $result = $this->filtre->visit($array);
         $this->assertEmpty($result);
     }
 
-    #[Test]
     public function testAllValidatorsAndNoKeys(): void{
         $this->filtre->accept("CP", $this->validators["CP"]);
         $this->filtre->accept("DateNaissance", $this->validators["DateNaissance"]);
@@ -100,20 +93,17 @@ class FiltreTest extends TestCase
         $this->assertFalse($result["CP"]);
     }
 
-    #[Test]
     public function testNoValidatorsAndNoKeys(): void{
         $array = [];
         $result = $this->filtre->visit($array);
         $this->assertEmpty($result);
     }
 
-    #[After]
     public function tearDown(): void
     {
         parent::tearDown();
     }
 
-    #[AfterClass]
     public static function tearDownAfterClass(): void
     {
     }

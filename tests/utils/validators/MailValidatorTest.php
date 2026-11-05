@@ -14,13 +14,11 @@ class MailValidatorTest extends TestCase
 {
     private MailValidator $validator;
 
-    #[BeforeClass]
     public static function setUpBeforeClass(): void
     {
         fwrite(STDOUT, "method : " . __METHOD__ . " line : " . __LINE__ . " \n IT WORKS \n ");
     }
 
-    #[Before]
     public function setUp(): void
     {
         parent::setUp();
@@ -30,7 +28,6 @@ class MailValidatorTest extends TestCase
     /**
      * @return void
      */
-    #[Test]
     public function testDomainHasADot(): void
     {
         $this->assertTrue($this->validator->validate("eleve@eleve.leschartreux.net"));
@@ -40,7 +37,6 @@ class MailValidatorTest extends TestCase
     /**
      * @return void
      */
-    #[Test]
     public function testForbiddenCharacters(): void
     {
         $this->assertFalse($this->validator->validate("6 7@x.fr"));
@@ -51,20 +47,17 @@ class MailValidatorTest extends TestCase
     /**
      * @return void
      */
-    #[Test]
     public function testPartBeforeAtIsNotTooLong(): void
     {
         $this->assertTrue($this->validator->validate(str_repeat("a", 64) . "@x.fr"));
         $this->assertFalse($this->validator->validate(str_repeat("a", 65) . "@x.fr"));
     }
 
-    #[After]
     public function tearDown(): void
     {
         parent::tearDown();
     }
 
-    #[AfterClass]
     public static function tearDownAfterClass(): void
     {
     }
