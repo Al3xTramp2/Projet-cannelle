@@ -74,7 +74,7 @@ class CaserneController extends BaseController
     public function doCreate(): void
     {
         $csrfToken = $_POST['csrf_token'] ?? null;
-        if(!is_string($csrfToken) || !CSRFCookie::check($csrfToken)){
+        if (!is_string($csrfToken) || !CSRFCookie::check($csrfToken)) {
             http_response_code(403);
             return;
         }
@@ -118,7 +118,7 @@ class CaserneController extends BaseController
     {
 
         $csrfToken = $_POST["csrf_token"] ?? null;
-        if(!is_string($csrfToken) || !CSRFCookie::check($csrfToken)){
+        if (!is_string($csrfToken) || !CSRFCookie::check($csrfToken)) {
             http_response_code(403);
             return;
         }
@@ -161,7 +161,7 @@ class CaserneController extends BaseController
     public function doDelete(): void
     {
         $csrfToken = $_POST["csrf_token"] ?? null;
-        if(!is_string($csrfToken) || !CSRFCookie::check($csrfToken)){
+        if (!is_string($csrfToken) || !CSRFCookie::check($csrfToken)) {
             http_response_code(403);
             return;
         }

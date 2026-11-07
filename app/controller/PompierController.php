@@ -84,7 +84,7 @@ class PompierController extends BaseController
     public function doCreate(): void
     {
         $csrfToken = $_POST['csrf_token'] ?? null;
-        if(!is_string($csrfToken) || !CSRFCookie::check($csrfToken)){
+        if (!is_string($csrfToken) || !CSRFCookie::check($csrfToken)) {
             http_response_code(403);
             return;
         }
@@ -132,7 +132,7 @@ class PompierController extends BaseController
     public function doUpdate(): void
     {
         $csrfToken = $_POST['csrf_token'] ?? null;
-        if(!is_string($csrfToken) || !CSRFCookie::check($csrfToken)){
+        if (!is_string($csrfToken) || !CSRFCookie::check($csrfToken)) {
             http_response_code(403);
             return;
         }
@@ -179,7 +179,7 @@ class PompierController extends BaseController
     public function doDelete(): void
     {
         $csrfToken = $_POST['csrf_token'] ?? null;
-        if(!is_string($csrfToken) || !CSRFCookie::check($csrfToken)){
+        if (!is_string($csrfToken) || !CSRFCookie::check($csrfToken)) {
             http_response_code(403);
             return;
         }
