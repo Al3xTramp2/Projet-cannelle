@@ -8,6 +8,7 @@ use Supalta\Cannelle\utils\Filtre;
 use Supalta\Cannelle\utils\Renderer;
 use Supalta\Cannelle\utils\validators\CodePostalValidator;
 use Supalta\Cannelle\utils\SingletonDataBaseMariaDB;
+use Supalta\Cannelle\utils\CSRF\CSRFCookie;
 use Exception;
 
 /**
@@ -61,7 +62,8 @@ class CaserneController extends BaseController
     public function create(): void
     {
         $types = Caserne::TYPES;
-        echo Renderer::render('caserneCreate', compact('types'));
+        $csrfToken = CSRFCookie::generateToken();
+        echo Renderer::render('caserneCreate', compact('types', "csrfToken"));
     }
 
     /**
@@ -71,11 +73,17 @@ class CaserneController extends BaseController
      */
     public function doCreate(): void
     {
+        $csrfToken = $_POST['csrf_token'] ?? null;
+        if(!is_string($csrfToken) || !CSRFCookie::check($csrfToken)){
+            http_response_code(403);
+            return;
+        }
+
         $resultat = $this->filtre->visit($_POST);
         if (!$resultat["cp"]) {
             $types = Caserne::TYPES;
             $erreur = true;
-            echo Renderer::render('caserneCreate', compact('types', 'erreur'));
+            echo Renderer::render('caserneCreate', compact('types', 'erreur', 'csrfToken'));
             return;
         }
 
@@ -97,7 +105,8 @@ class CaserneController extends BaseController
     {
         $caserne = $this->daoCaserne->find((int) $_GET['numCaserne']);
         $types = Caserne::TYPES;
-        echo Renderer::render('caserneUpdate', compact('caserne', 'types'));
+        $csrfToken = CSRFCookie::generateToken();
+        echo Renderer::render('caserneUpdate', compact('caserne', 'types', "csrfToken"));
     }
 
     /**
@@ -107,13 +116,20 @@ class CaserneController extends BaseController
      */
     public function doUpdate(): void
     {
+
+        $csrfToken = $_POST["csrf_token"] ?? null;
+        if(!is_string($csrfToken) || !CSRFCookie::check($csrfToken)){
+            http_response_code(403);
+            return;
+        }
+
         $caserne = $this->daoCaserne->find((int) $_POST['numCaserne']);
 
         $resultat = $this->filtre->visit($_POST);
         if (!$resultat["cp"]) {
             $types = Caserne::TYPES;
             $erreur = true;
-            echo Renderer::render('caserneUpdate', compact('caserne', 'types', 'erreur'));
+            echo Renderer::render('caserneUpdate', compact('caserne', 'types', 'erreur', 'csrfToken'));
             return;
         }
 
@@ -133,7 +149,8 @@ class CaserneController extends BaseController
     public function delete(): void
     {
         $caserne = $this->daoCaserne->find((int) $_GET['numCaserne']);
-        echo Renderer::render('caserneDelete', compact('caserne'));
+        $csrfToken = CSRFCookie::generateToken();
+        echo Renderer::render('caserneDelete', compact('caserne', 'csrfToken'));
     }
 
     /**
@@ -143,6 +160,12 @@ class CaserneController extends BaseController
      */
     public function doDelete(): void
     {
+        $csrfToken = $_POST["csrf_token"] ?? null;
+        if(!is_string($csrfToken) || !CSRFCookie::check($csrfToken)){
+            http_response_code(403);
+            return;
+        }
+
         $caserne = $this->daoCaserne->find((int) $_POST['numCaserne']);
         $this->daoCaserne->delete($caserne);
         header('Location: /caserne/liste');

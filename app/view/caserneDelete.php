@@ -50,7 +50,9 @@
             </p>
 
             <form method="post" action="/caserne/delete">
-                <input type="hidden" name="numCaserne" value="{{ $caserne->getNumCaserne() }}">
+                <input type="hidden" name="numCaserne"
+                       value="{{ $caserne->getNumCaserne() }}">
+                <input type="hidden" name="csrf_token" value="{{ $csrfToken }}">
 
                 <button type="submit" class="btn btn-danger">
                     Confirmer la suppression

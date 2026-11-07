@@ -9,6 +9,7 @@ use Supalta\Cannelle\utils\Filtre;
 use Supalta\Cannelle\utils\Renderer;
 use Supalta\Cannelle\utils\validators\DateNaissanceValidator;
 use Supalta\Cannelle\utils\SingletonDataBaseMariaDB;
+use Supalta\Cannelle\utils\CSRF\CSRFCookie;
 use DateTime;
 use Exception;
 
@@ -71,7 +72,8 @@ class PompierController extends BaseController
     {
         $casernes = $this->daoCaserne->findAll();
         $grades = Pompier::GRADES;
-        echo Renderer::render("pompierCreate", compact('casernes', 'grades'));
+        $csrfToken = CSRFCookie::generateToken();
+        echo Renderer::render("pompierCreate", compact('casernes', 'grades', 'csrfToken'));
     }
 
     /**
@@ -81,12 +83,18 @@ class PompierController extends BaseController
      */
     public function doCreate(): void
     {
+        $csrfToken = $_POST['csrf_token'] ?? null;
+        if(!is_string($csrfToken) || !CSRFCookie::check($csrfToken)){
+            http_response_code(403);
+            return;
+        }
+
         $resultat = $this->filtre->visit($_POST);
         if (!$resultat["dateNaissance"]) {
             $casernes = $this->daoCaserne->findAll();
             $grades = Pompier::GRADES;
             $erreur = true;
-            echo Renderer::render("pompierCreate", compact('casernes', 'grades', 'erreur'));
+            echo Renderer::render("pompierCreate", compact('casernes', 'grades', 'erreur', 'csrfToken'));
             return;
         }
 
@@ -112,7 +120,8 @@ class PompierController extends BaseController
         $pompier = $this->daoPompier->find($_GET['matricule']);
         $casernes = $this->daoCaserne->findAll();
         $grades = Pompier::GRADES;
-        echo Renderer::render("pompierUpdate", compact('pompier', 'casernes', 'grades'));
+        $csrfToken = CSRFCookie::generateToken();
+        echo Renderer::render("pompierUpdate", compact('pompier', 'casernes', 'grades', 'csrfToken'));
     }
 
     /**
@@ -122,6 +131,12 @@ class PompierController extends BaseController
      */
     public function doUpdate(): void
     {
+        $csrfToken = $_POST['csrf_token'] ?? null;
+        if(!is_string($csrfToken) || !CSRFCookie::check($csrfToken)){
+            http_response_code(403);
+            return;
+        }
+
         $pompier = $this->daoPompier->find($_POST['matricule']);
 
         $resultat = $this->filtre->visit($_POST);
@@ -129,7 +144,7 @@ class PompierController extends BaseController
             $casernes = $this->daoCaserne->findAll();
             $grades = Pompier::GRADES;
             $erreur = true;
-            echo Renderer::render("pompierUpdate", compact('pompier', 'casernes', 'grades', 'erreur'));
+            echo Renderer::render("pompierUpdate", compact('pompier', 'casernes', 'grades', 'erreur', 'csrfToken'));
             return;
         }
 
@@ -152,7 +167,8 @@ class PompierController extends BaseController
     public function delete(): void
     {
         $pompier = $this->daoPompier->find($_GET['matricule']);
-        echo Renderer::render("pompierDelete", compact('pompier'));
+        $csrfToken = CSRFCookie::generateToken();
+        echo Renderer::render("pompierDelete", compact('pompier', 'csrfToken'));
     }
 
     /**
@@ -162,6 +178,12 @@ class PompierController extends BaseController
      */
     public function doDelete(): void
     {
+        $csrfToken = $_POST['csrf_token'] ?? null;
+        if(!is_string($csrfToken) || !CSRFCookie::check($csrfToken)){
+            http_response_code(403);
+            return;
+        }
+
         $pompier = $this->daoPompier->find($_POST['matricule']);
         $this->daoPompier->delete($pompier);
         header('Location: /pompier/liste');

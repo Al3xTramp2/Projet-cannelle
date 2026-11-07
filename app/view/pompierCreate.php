@@ -10,7 +10,9 @@
 <nav class="navbar navbar-expand-lg bg-danger" data-bs-theme="dark">
     <div class="container">
         <a class="navbar-brand" href="/default/home">Cannelle</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menu" aria-controls="menu" aria-expanded="false" aria-label="Afficher le menu">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#menu" aria-controls="menu" aria-expanded="false"
+                aria-label="Afficher le menu">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="menu">
@@ -25,12 +27,16 @@
         </div>
     </div>
 </nav>
+
 <main class="container my-4">
     <h1 class="h3 mb-3">Nouveau pompier</h1>
+
     @if(isset($erreur))
     <div class="alert alert-danger">Date de naissance invalide (pompier de 18 à 60 ans).</div>
     @endif
+
     <form method="post" action="/pompier/add" class="row g-3">
+        <input type="hidden" name="csrf_token" value="{{ $csrfToken }}">
 
         <div class="col-md-6">
             <label for="prenom" class="form-label">Prénom</label>
@@ -69,7 +75,8 @@
         </div>
         <div class="col-md-4">
             <label for="matriculeRespo" class="form-label">Matricule du responsable</label>
-            <input type="text" class="form-control" id="matriculeRespo" name="matriculeRespo" maxlength="7" required>
+            <input type="text" class="form-control" id="matriculeRespo"
+                   name="matriculeRespo" maxlength="7" required>
         </div>
         <div class="col-12">
             <button type="submit" class="btn btn-danger">Enregistrer</button>
@@ -77,6 +84,7 @@
         </div>
     </form>
 </main>
+
 <script src="/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
