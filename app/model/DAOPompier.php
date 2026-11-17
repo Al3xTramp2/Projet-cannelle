@@ -148,7 +148,7 @@ class DAOPompier extends DAO
             throw new Exception("Le pompier " . $pompier->getMatricule() . " n'existe pas !");
         }
         // Update du pompier
-        $sql = "UPDATE pompiers SET Deleted = TRUE WHERE Matricule = :Matricule";
+        $sql = "UPDATE pompiers SET Deleted = true WHERE Matricule = :Matricule";
         $preparedStatement = $this->pdo->prepare($sql);
         $preparedStatement->bindValue("Matricule", $pompier->getMatricule(), PDO::PARAM_STR);
         $preparedStatement->execute();

@@ -10,6 +10,9 @@ use Exception;
  */
 class Caserne extends \stdClass
 {
+    /**
+     * Maps fire station type codes to their display names.
+     */
     public const array TYPES = [
         "1" => "Pro",
         "2" => "Mixte",
@@ -37,7 +40,7 @@ class Caserne extends \stdClass
      * @return $this
      * @throws Exception
      */
-    public function setNumCaserne(int $NumCaserne): Caserne
+    public function setNumCaserne(int $NumCaserne): self
     {
         if ($NumCaserne <= 0) {
             throw new Exception("Le numéro de caserne doit être positif !");
@@ -61,7 +64,7 @@ class Caserne extends \stdClass
      * @return $this
      * @throws Exception
      */
-    public function setAdresse(string $Adresse): Caserne
+    public function setAdresse(string $Adresse): self
     {
         if ($Adresse === "") {
             throw new Exception("L'adresse ne peut pas être vide !");
@@ -88,7 +91,7 @@ class Caserne extends \stdClass
      * @return $this
      * @throws Exception
      */
-    public function setCP(string $CP): Caserne
+    public function setCP(string $CP): self
     {
         if (mb_strlen($CP) !== 5 || !ctype_digit($CP)) {
             throw new Exception("Le code postal doit contenir exactement 5 chiffres !");
@@ -112,7 +115,7 @@ class Caserne extends \stdClass
      * @return $this
      * @throws Exception
      */
-    public function setVille(string $Ville): Caserne
+    public function setVille(string $Ville): self
     {
         if ($Ville === "") {
             throw new Exception("Le nom de la ville ne peut pas être vide !");
@@ -139,7 +142,7 @@ class Caserne extends \stdClass
      * @return $this
      * @throws Exception
      */
-    public function setCodeTypeC(int $CodeTypeC): Caserne
+    public function setCodeTypeC(int $CodeTypeC): self
     {
         if (!array_key_exists((string)$CodeTypeC, self::TYPES)) {
             throw new Exception("Le code de type de caserne n'est pas valide !");
@@ -154,6 +157,6 @@ class Caserne extends \stdClass
      */
     public function getType(): string
     {
-        return self::TYPES[(string)$this->CodeTypeC];
+        return self::TYPES[$this->CodeTypeC];
     }
 }

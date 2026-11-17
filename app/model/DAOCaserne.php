@@ -6,7 +6,7 @@ use Exception;
 use PDO;
 
 /**
- * Data access object of the casernes, uses the table casernes
+ * Data access object of the casernes, uses the table Caserne
  */
 class DAOCaserne extends DAO
 {
@@ -47,7 +47,7 @@ class DAOCaserne extends DAO
      */
     public function find(int $id): ?Caserne
     {
-        $sql = "SELECT * FROM casernes WHERE NumCaserne = :NumCaserne AND Deleted = FALSE";
+        $sql = "SELECT * FROM casernes WHERE NumCaserne = :NumCaserne AND Deleted = FALSE;";
 
         $preparedStatement = $this->pdo->prepare($sql);
         $preparedStatement->bindValue("NumCaserne", $id, PDO::PARAM_INT);
@@ -68,7 +68,7 @@ class DAOCaserne extends DAO
         $caserne->setNumCaserne($this->keyGenerator());
 
         $sql = "INSERT INTO casernes (NumCaserne, Adresse, CP, Ville, CodeTypeC) 
-                VALUES (:NumCaserne, :Adresse, :CP, :Ville, :CodeTypeC)";
+                VALUES (:NumCaserne, :Adresse, :CP, :Ville, :CodeTypeC);";
 
         $preparedStatement = $this->pdo->prepare($sql);
         $preparedStatement->bindValue("NumCaserne", $caserne->getNumCaserne(), PDO::PARAM_INT);
@@ -81,7 +81,7 @@ class DAOCaserne extends DAO
     }
 
     /**
-     * Update the Caserne entity
+     * Update a Caserne entity
      * @param Caserne $caserne
      * @return bool
      * @throws Exception if the Caserne does not exist
@@ -93,7 +93,7 @@ class DAOCaserne extends DAO
         }
 
         $sql = "UPDATE casernes SET Adresse = :Adresse, CP = :CP, Ville = :Ville, CodeTypeC = :CodeTypeC "
-             . "WHERE NumCaserne = :NumCaserne";
+             . "WHERE NumCaserne = :NumCaserne AND Deleted = false;";
 
         $preparedStatement = $this->pdo->prepare($sql);
         $preparedStatement->bindValue("NumCaserne", $caserne->getNumCaserne(), PDO::PARAM_INT);
@@ -106,7 +106,7 @@ class DAOCaserne extends DAO
     }
 
     /**
-     * Delete the Caserne entity
+     * Delete a Caserne entity
      * @param Caserne $caserne
      * @return bool
      * @throws Exception
@@ -117,12 +117,12 @@ class DAOCaserne extends DAO
             throw new Exception("La caserne portant le numéro " . $caserne->getNumCaserne() . " n'existe pas !");
         }
         // Update des pompiers appartenant à la caserne
-        $sql = "UPDATE pompiers SET NumCaserne = NULL WHERE NumCaserne = :NumCaserne AND Deleted = FALSE";
+        $sql = "UPDATE pompiers SET Deleted = true WHERE NumCaserne = :NumCaserne;";
         $preparedStatement = $this->pdo->prepare($sql);
         $preparedStatement->bindValue("NumCaserne", $caserne->getNumCaserne(), PDO::PARAM_INT);
         $preparedStatement->execute();
         // Update de la caserne
-        $sql = "UPDATE casernes SET Deleted = TRUE WHERE NumCaserne = :NumCaserne";
+        $sql = "UPDATE casernes SET Deleted = TRUE WHERE NumCaserne = :NumCaserne;";
         $preparedStatement = $this->pdo->prepare($sql);
         $preparedStatement->bindValue("NumCaserne", $caserne->getNumCaserne(), PDO::PARAM_INT);
 
@@ -137,7 +137,7 @@ class DAOCaserne extends DAO
      */
     public function findAll(int $offset = 0, int $limit = 100): array
     {
-        $sql = "SELECT * FROM casernes WHERE Deleted = FALSE ORDER BY NumCaserne LIMIT :offset, :limit";
+        $sql = "SELECT * FROM casernes WHERE Deleted = FALSE ORDER BY NumCaserne LIMIT :offset, :limit;";
 
         $preparedStatement = $this->pdo->prepare($sql);
         $preparedStatement->bindValue("offset", $offset, PDO::PARAM_INT);
@@ -155,7 +155,7 @@ class DAOCaserne extends DAO
      */
     public function count(): int
     {
-        $sql = "SELECT COUNT(*) FROM casernes WHERE Deleted = FALSE";
+        $sql = "SELECT COUNT(*) FROM casernes WHERE Deleted = FALSE;";
 
         $count = $this->pdo->query($sql)->fetchColumn();
 
@@ -169,7 +169,7 @@ class DAOCaserne extends DAO
      */
     public function findByVille(string $ville): array
     {
-        $sql = "SELECT * FROM casernes WHERE Ville = :Ville AND Deleted = FALSE ORDER BY NumCaserne";
+        $sql = "SELECT * FROM casernes WHERE Ville = :Ville AND Deleted = FALSE ORDER BY NumCaserne;";
 
         $preparedStatement = $this->pdo->prepare($sql);
         $preparedStatement->bindValue("Ville", $ville, PDO::PARAM_STR);
