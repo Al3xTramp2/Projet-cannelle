@@ -1,6 +1,6 @@
 <?php
 
-namespace Supalta\Cannelle\utils\CSRF;
+namespace Supalta\Cannelle\utils\validators\CSRF;
 
 use Override;
 use Random\RandomException;

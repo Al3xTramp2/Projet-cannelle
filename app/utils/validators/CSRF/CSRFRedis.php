@@ -1,6 +1,6 @@
 <?php
 
-namespace Supalta\Cannelle\utils\CSRF;
+namespace Supalta\Cannelle\utils\validators\CSRF;
 
 class CSRFRedis extends CSRF
 {
