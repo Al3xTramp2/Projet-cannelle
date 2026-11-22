@@ -146,7 +146,7 @@ class DAOUser extends DAO
      * Return all User entities, limited to 100 and starting from the first one by default
      * @param int $offset
      * @param int $limit
-     * @return array
+     * @return User[]
      */
     public function findAll(int $offset = 0, int $limit = 100): array
     {
@@ -176,8 +176,8 @@ class DAOUser extends DAO
     /**
      * Return all the User entities caller $Nom
      * @param string $Nom
-     * @return array
-     */
+     * @return User[]
+ */
     public function findByNom(string $Nom): array
     {
         $sql = "SELECT * FROM user WHERE Nom = :Nom AND Deleted = FALSE ORDER BY IdUser";
@@ -187,5 +187,22 @@ class DAOUser extends DAO
         $preparedStatement->execute();
 
         return $preparedStatement->fetchAll(PDO::FETCH_CLASS, User::class);
+    }
+
+    /**
+     * Finds an active user by login and return it
+     * @param string $login
+     * @return User|null
+     */
+    public function findByLogin(string $login): ?User
+    {
+        $sql = "SELECT * FROM user WHERE Login = :Login AND Deleted = FALSE";
+
+        $preparedStatement = $this->pdo->prepare($sql);
+        $preparedStatement->bindValue("Login", $login, PDO::PARAM_STR);
+        $preparedStatement->execute();
+
+        $user = $preparedStatement->fetchObject(User::class);
+        return $user ?: null;
     }
 }

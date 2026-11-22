@@ -57,7 +57,6 @@ class CSRFCookie extends CSRF
         if (!hash_equals($stored["token"], $token)) {
             return false;
         }
-
         return true;
     }
 }

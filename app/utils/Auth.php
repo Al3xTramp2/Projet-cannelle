@@ -2,80 +2,118 @@
 
 namespace Supalta\Cannelle\utils;
 
-use Supalta\Cannelle\utils\validators\User;
+use Exception;
+use Supalta\Cannelle\model\DAOUser;
+use Supalta\Cannelle\model\User;
 
 class Auth
 {
-    private $link2 = [
-        "secretaire" => 257,
+    private const array PRIVILEGES = [
+        'Pompier' => 1 + 256,
+        'Responsable de Caserne' => 1 + 2 + 256 + 512,
+        'Secretaire' => 1 + 2 + 8 + 256 + 512 + 2048 + 65536,
+        'Admin' => 2039583,
+    ];
 
-    ]
-
-    private $link[
-        "secretaire" => [
-            "pompier" => [
-                "C" => false,
-                "R" => true,            //il est possible de faire de cette façons mais on peut faire avec les bits comme les professionnels
-                "U" => false,
-                "D" => false,
-                "Rd" => true
-            ],
-        ],
-        ];
-
-
-
+    private const array DROITS = [
+        'caserne' => ['read' => 1, 'detail' => 2, 'create' => 4, 'update' => 8, 'delete' => 16],
+        'pompier' => ['read' => 256, 'detail' => 512, 'create' => 1024, 'update' => 2048, 'delete' => 4096],
+        'user' => ['read' => 65536, 'detail' => 131072, 'create' => 262144, 'update' => 524288, 'delete' => 1048576],
+    ];
 
     /**
-     * Check if user exist in DB, and login
+     * Check if user exist in DB with is login
      * @param string $log
      * @param string $password
      * @return User|null
+     * @throws Exception
      */
-        public static function login(string $log, string $password): ?User
-        {
-            //TODO: check user exist with dao
-            // TODO : create sessions and store defined data in session
-            //TODO: log action to log file...
+    public static function login(string $log, string $password): ?User
+    {
+        $pdo = SingletonDataBaseMariaDB::getInstance()->getLoggedPDO();
+        $daoUser = new DAOUser($pdo);
+        $user = $daoUser->findByLogin($log);
+
+        if ($user === null) {
+            return null;
         }
+        if (!password_verify($password, $user->getPasswordHash())) {
+            return null;
+        }
+        if (session_status() !== PHP_SESSION_ACTIVE && !session_start()) {
+            throw new Exception("Impossible de démarrer la session.");
+        }
+        if (!session_regenerate_id(true)) {
+            throw new Exception("Impossible de renouveler la session.");
+        }
+
+        $_SESSION['auth']['idUser'] = $user->getIdUser();
+        $_SESSION['auth']['role'] = $user->getRoleName();
+
+        SingletonLogger::getInstance()
+            ->getAccessLogger()
+            ->info('Connexion réussie', ['idUser' => $user->getIdUser()]);
+        return $user;
+    }
 
     /**
      * @return void
      */
-        public static function logout(): void
-        {
-            //on détruit la clé de auth, pas directement la session sinon on vas avoir des problèmes avec les csrf
+    public static function logout(): void
+    {
+        if (!self::isLogged()) {
+            return;
         }
 
+        $idUser = $_SESSION['auth']['idUser'];
+        unset($_SESSION['auth']);
+
+        SingletonLogger::getInstance()
+            ->getAccessLogger()
+            ->info('Déconnexion réussie', ['idUser' => $idUser]);
+    }
+
     /**
-     * Check if the user is logged (based on session informations)
+     * Check if the user is logged (based on session information)
      * @return bool
      */
-        public static function is_logged(): bool
-        {
+    public static function isLogged(): bool
+    {
+        if (session_status() !== PHP_SESSION_ACTIVE && !session_start()) {
+            return false;
         }
 
+        return isset($_SESSION['auth']['idUser']);
+    }
+
     /**
-     * @param string $role
-     * @return bool
+     * Return the role name of the logged user, or an empty string
+     * @return string
      */
-        public static function has(string $role): bool
-        {
-            //si on est loggé elle vérifie qu'on a le role définit dans la session
+    public static function getRole(): string
+    {
+        if (!self::isLogged()) {
+            return '';
         }
 
-        public static function getRole(string $role): string
-        {
-            //renvoie le role de la personne car la méthode has nous dit juste si c'est une secrétaire ou pas
-        }
+        return $_SESSION['auth']['role'];
+    }
 
     /**
+     * Return true if the role of the logged user allows the action on the table
      * @param string $table
      * @param string $perm
      * @return bool
      */
-        public static function can(string $table, string $perm): bool
-        {
-            //vérifie qu'on a les privilèges nécessaires sur une table donnée
+    public static function can(string $table, string $perm): bool
+    {
+        $droitDemande = self::DROITS[$table][$perm] ?? null;
+        if ($droitDemande === null) {
+            return false;
         }
+
+        $privileges = self::PRIVILEGES[self::getRole()] ?? 0;
+
+        return ($privileges & $droitDemande) === $droitDemande;
+    }
 }
