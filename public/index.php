@@ -10,6 +10,7 @@ require_once '../vendor/autoload.php';
 use Supalta\Cannelle\controller\AuthController;
 use Supalta\Cannelle\controller\CaserneController;
 use Supalta\Cannelle\controller\PompierController;
+use Supalta\Cannelle\controller\UserController;
 use Supalta\Cannelle\controller\DefaultController;
 use Supalta\Cannelle\utils\Auth;
 
@@ -70,6 +71,16 @@ switch ($control) {
         }
         break;
     }
+    case "user" :
+    {
+        if ($_SERVER["REQUEST_METHOD"] == "GET") {
+            userRoutes_get($fragments);
+        }
+        if ($_SERVER["REQUEST_METHOD"] == "POST") {
+            userRoutes_post($fragments);
+        }
+        break;
+    }
     default :
     {
         defaultRoutes_get($fragments);
@@ -123,6 +134,50 @@ function authRoutes_post($fragments): void
     switch ($action) {
         case "login" :
             call_user_func_array([new AuthController(), "doLogin"], $fragments);
+            break;
+        default:
+            echo "Action '$action' non defini <hr>";
+            break;
+    }
+}
+
+function userRoutes_get($fragments): void
+{
+    $action = array_shift($fragments);
+    switch ($action) {
+        case "liste" :
+            call_user_func_array([new UserController(), "show"], $fragments);
+            break;
+        case "detail" :
+            call_user_func_array([new UserController(), "detail"], $fragments);
+            break;
+        case "ajouter" :
+            call_user_func_array([new UserController(), "create"], $fragments);
+            break;
+        case "modifier" :
+            call_user_func_array([new UserController(), "update"], $fragments);
+            break;
+        case "supprimer" :
+            call_user_func_array([new UserController(), "delete"], $fragments);
+            break;
+        default:
+            echo "Action '$action' non defini <hr>";
+            break;
+    }
+}
+
+function userRoutes_post($fragments): void
+{
+    $action = array_shift($fragments);
+    switch ($action) {
+        case "add" :
+            call_user_func_array([new UserController(), "doCreate"], $fragments);
+            break;
+        case "update" :
+            call_user_func_array([new UserController(), "doUpdate"], $fragments);
+            break;
+        case "delete" :
+            call_user_func_array([new UserController(), "doDelete"], $fragments);
             break;
         default:
             echo "Action '$action' non defini <hr>";

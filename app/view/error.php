@@ -21,6 +21,11 @@
                 <li class="nav-item">
                     <a class="nav-link" href="/caserne/liste">Casernes</a>
                 </li>
+                @if(\Supalta\Cannelle\utils\Auth::can('user', 'read'))
+                <li class="nav-item">
+                    <a class="nav-link" href="/user/liste">Utilisateurs</a>
+                </li>
+                @endif
             </ul>
             <a class="btn btn-outline-light" href="/auth/logout">Déconnexion</a>
         </div>

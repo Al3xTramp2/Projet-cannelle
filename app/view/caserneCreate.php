@@ -18,6 +18,9 @@
             <ul class="navbar-nav me-auto">
                 <li class="nav-item"><a class="nav-link" href="/pompier/liste">Pompiers</a></li>
                 <li class="nav-item"><a class="nav-link active" aria-current="page" href="/caserne/liste">Casernes</a></li>
+                @if(\Supalta\Cannelle\utils\Auth::can('user', 'read'))
+                <li class="nav-item"><a class="nav-link" href="/user/liste">Utilisateurs</a></li>
+                @endif
             </ul>
             <a class="btn btn-outline-light" href="/auth/logout">Déconnexion</a>
         </div>
