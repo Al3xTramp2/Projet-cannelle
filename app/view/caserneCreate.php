@@ -19,6 +19,7 @@
                 <li class="nav-item"><a class="nav-link" href="/pompier/liste">Pompiers</a></li>
                 <li class="nav-item"><a class="nav-link active" aria-current="page" href="/caserne/liste">Casernes</a></li>
             </ul>
+            <a class="btn btn-outline-light" href="/auth/logout">Déconnexion</a>
         </div>
     </div>
 </nav>

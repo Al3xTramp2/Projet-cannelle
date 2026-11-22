@@ -2,14 +2,14 @@
 
 namespace Supalta\Cannelle\controller;
 
+use Exception;
 use Supalta\Cannelle\model\Caserne;
 use Supalta\Cannelle\model\DAOCaserne;
 use Supalta\Cannelle\utils\Filtre;
 use Supalta\Cannelle\utils\Renderer;
-use Supalta\Cannelle\utils\validators\CodePostalValidator;
 use Supalta\Cannelle\utils\SingletonDataBaseMariaDB;
-use Supalta\Cannelle\utils\CSRF\CSRFCookie;
-use Exception;
+use Supalta\Cannelle\utils\validators\CodePostalValidator;
+use Supalta\Cannelle\utils\validators\CSRF\CSRFCookie;
 
 /**
  * Controller of the Caserne: lists, shows, creates, updates and deletes them

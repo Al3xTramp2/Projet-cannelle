@@ -22,6 +22,7 @@
                     <a class="nav-link" href="/caserne/liste">Casernes</a>
                 </li>
             </ul>
+            <a class="btn btn-outline-light" href="/auth/logout">Déconnexion</a>
         </div>
     </div>
 </nav>

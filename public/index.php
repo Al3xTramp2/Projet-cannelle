@@ -7,9 +7,11 @@
 //echo "<pre>" . print_r($_SERVER, true) . "<pre>";
 require_once '../vendor/autoload.php';
 
+use Supalta\Cannelle\controller\AuthController;
 use Supalta\Cannelle\controller\CaserneController;
 use Supalta\Cannelle\controller\PompierController;
 use Supalta\Cannelle\controller\DefaultController;
+use Supalta\Cannelle\utils\Auth;
 
 if (isset($_SERVER["PATH_INFO"])) {
     $path = trim($_SERVER["PATH_INFO"], "/");
@@ -23,10 +25,26 @@ $fragments = explode("/", $path);
 
 $control = array_shift($fragments);
 //echo "control : $control <hr>";
+
+if ($control !== "auth" && !Auth::isLogged()) {
+    header("Location: /auth/login");
+    exit;
+}
+
 switch ($control) {
     case '' :
     { //l'url est /
         defaultRoutes_get(["home"]);
+        break;
+    }
+    case "auth" :
+    {
+        if ($_SERVER["REQUEST_METHOD"] == "GET") {
+            authRoutes_get($fragments);
+        }
+        if ($_SERVER["REQUEST_METHOD"] == "POST") {
+            authRoutes_post($fragments);
+        }
         break;
     }
     case "pompier" :
@@ -83,6 +101,34 @@ function defaultRoutes_get($fragments): void
     }
 }
 
+function authRoutes_get($fragments): void
+{
+    $action = array_shift($fragments);
+    switch ($action) {
+        case "login" :
+            call_user_func_array([new AuthController(), "login"], $fragments);
+            break;
+        case "logout" :
+            call_user_func_array([new AuthController(), "logout"], $fragments);
+            break;
+        default:
+            echo "Action '$action' non defini <hr>";
+            break;
+    }
+}
+
+function authRoutes_post($fragments): void
+{
+    $action = array_shift($fragments);
+    switch ($action) {
+        case "login" :
+            call_user_func_array([new AuthController(), "doLogin"], $fragments);
+            break;
+        default:
+            echo "Action '$action' non defini <hr>";
+            break;
+    }
+}
 
 function pompierRoutes_get($fragments)
 {
@@ -179,8 +225,6 @@ function caserneRoutes_get($fragments)
             break;
     }
 }
-
-
 
 function caserneRoutes_post($fragments)
 {

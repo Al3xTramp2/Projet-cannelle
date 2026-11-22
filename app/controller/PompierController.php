@@ -2,16 +2,16 @@
 
 namespace Supalta\Cannelle\controller;
 
+use DateTime;
+use Exception;
 use Supalta\Cannelle\model\DAOCaserne;
 use Supalta\Cannelle\model\DAOPompier;
 use Supalta\Cannelle\model\Pompier;
 use Supalta\Cannelle\utils\Filtre;
 use Supalta\Cannelle\utils\Renderer;
-use Supalta\Cannelle\utils\validators\DateNaissanceValidator;
 use Supalta\Cannelle\utils\SingletonDataBaseMariaDB;
-use Supalta\Cannelle\utils\CSRF\CSRFCookie;
-use DateTime;
-use Exception;
+use Supalta\Cannelle\utils\validators\CSRF\CSRFCookie;
+use Supalta\Cannelle\utils\validators\DateNaissanceValidator;
 
 /**
  * Controller of the pompiers: lists, shows, creates, updates and deletes them
