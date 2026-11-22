@@ -38,6 +38,10 @@ class CaserneController extends BaseController
      */
     public function show(): void
     {
+        if (!$this->allow('caserne', 'read')) {
+            return;
+        }
+
         $casernes = $this->daoCaserne->findAll(0, 1000);
         $total = count($casernes);
         echo Renderer::render('caserneListe', compact('casernes', 'total'));
@@ -50,6 +54,10 @@ class CaserneController extends BaseController
      */
     public function detail(): void
     {
+        if (!$this->allow('caserne', 'detail')) {
+            return;
+        }
+
         $caserne = $this->daoCaserne->find((int) $_GET['numCaserne']);
         echo Renderer::render('caserneDetail', compact('caserne'));
     }
@@ -61,6 +69,10 @@ class CaserneController extends BaseController
      */
     public function create(): void
     {
+        if (!$this->allow('caserne', 'create')) {
+            return;
+        }
+
         $types = Caserne::TYPES;
         $csrfToken = CSRFCookie::generateToken();
         echo Renderer::render('caserneCreate', compact('types', "csrfToken"));
@@ -73,6 +85,10 @@ class CaserneController extends BaseController
      */
     public function doCreate(): void
     {
+        if (!$this->allow('caserne', 'create')) {
+            return;
+        }
+
         $csrfToken = $_POST['csrf_token'] ?? null;
         if (!is_string($csrfToken) || !CSRFCookie::check($csrfToken)) {
             http_response_code(403);
@@ -103,6 +119,10 @@ class CaserneController extends BaseController
      */
     public function update(): void
     {
+        if (!$this->allow('caserne', 'update')) {
+            return;
+        }
+
         $caserne = $this->daoCaserne->find((int) $_GET['numCaserne']);
         $types = Caserne::TYPES;
         $csrfToken = CSRFCookie::generateToken();
@@ -116,6 +136,10 @@ class CaserneController extends BaseController
      */
     public function doUpdate(): void
     {
+        if (!$this->allow('caserne', 'update')) {
+            return;
+        }
+
 
         $csrfToken = $_POST["csrf_token"] ?? null;
         if (!is_string($csrfToken) || !CSRFCookie::check($csrfToken)) {
@@ -148,6 +172,10 @@ class CaserneController extends BaseController
      */
     public function delete(): void
     {
+        if (!$this->allow('caserne', 'delete')) {
+            return;
+        }
+
         $caserne = $this->daoCaserne->find((int) $_GET['numCaserne']);
         $csrfToken = CSRFCookie::generateToken();
         echo Renderer::render('caserneDelete', compact('caserne', 'csrfToken'));
@@ -160,6 +188,10 @@ class CaserneController extends BaseController
      */
     public function doDelete(): void
     {
+        if (!$this->allow('caserne', 'delete')) {
+            return;
+        }
+
         $csrfToken = $_POST["csrf_token"] ?? null;
         if (!is_string($csrfToken) || !CSRFCookie::check($csrfToken)) {
             http_response_code(403);
@@ -178,6 +210,10 @@ class CaserneController extends BaseController
      */
     public function showByVille(): void
     {
+        if (!$this->allow('caserne', 'read')) {
+            return;
+        }
+
         $casernes = $this->daoCaserne->findByVille($_GET['ville']);
         $total = count($casernes);
         echo Renderer::render('caserneListe', compact('casernes', 'total'));

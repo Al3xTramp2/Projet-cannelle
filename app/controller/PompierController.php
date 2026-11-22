@@ -42,6 +42,10 @@ class PompierController extends BaseController
      */
     public function show(): void
     {
+        if (!$this->allow('pompier', 'read')) {
+            return;
+        }
+
         $villes = [];
         foreach ($this->daoCaserne->findAll(0, 1000) as $caserne) {
             $villes[$caserne->getNumCaserne()] = $caserne->getVille();
@@ -59,6 +63,10 @@ class PompierController extends BaseController
      */
     public function detail(): void
     {
+        if (!$this->allow('pompier', 'detail')) {
+            return;
+        }
+
         $pompier = $this->daoPompier->find($_GET['matricule']);
         echo Renderer::render("pompierDetail", compact('pompier'));
     }
@@ -70,6 +78,10 @@ class PompierController extends BaseController
      */
     public function create(): void
     {
+        if (!$this->allow('pompier', 'create')) {
+            return;
+        }
+
         $casernes = $this->daoCaserne->findAll();
         $grades = Pompier::GRADES;
         $csrfToken = CSRFCookie::generateToken();
@@ -83,6 +95,10 @@ class PompierController extends BaseController
      */
     public function doCreate(): void
     {
+        if (!$this->allow('pompier', 'create')) {
+            return;
+        }
+
         $csrfToken = $_POST['csrf_token'] ?? null;
         if (!is_string($csrfToken) || !CSRFCookie::check($csrfToken)) {
             http_response_code(403);
@@ -117,6 +133,10 @@ class PompierController extends BaseController
      */
     public function update(): void
     {
+        if (!$this->allow('pompier', 'update')) {
+            return;
+        }
+
         $pompier = $this->daoPompier->find($_GET['matricule']);
         $casernes = $this->daoCaserne->findAll();
         $grades = Pompier::GRADES;
@@ -131,6 +151,10 @@ class PompierController extends BaseController
      */
     public function doUpdate(): void
     {
+        if (!$this->allow('pompier', 'update')) {
+            return;
+        }
+
         $csrfToken = $_POST['csrf_token'] ?? null;
         if (!is_string($csrfToken) || !CSRFCookie::check($csrfToken)) {
             http_response_code(403);
@@ -166,6 +190,10 @@ class PompierController extends BaseController
      */
     public function delete(): void
     {
+        if (!$this->allow('pompier', 'delete')) {
+            return;
+        }
+
         $pompier = $this->daoPompier->find($_GET['matricule']);
         $csrfToken = CSRFCookie::generateToken();
         echo Renderer::render("pompierDelete", compact('pompier', 'csrfToken'));
@@ -178,6 +206,10 @@ class PompierController extends BaseController
      */
     public function doDelete(): void
     {
+        if (!$this->allow('pompier', 'delete')) {
+            return;
+        }
+
         $csrfToken = $_POST['csrf_token'] ?? null;
         if (!is_string($csrfToken) || !CSRFCookie::check($csrfToken)) {
             http_response_code(403);
@@ -196,6 +228,10 @@ class PompierController extends BaseController
      */
     public function showByName(): void
     {
+        if (!$this->allow('pompier', 'read')) {
+            return;
+        }
+
         $villes = [];
         foreach ($this->daoCaserne->findAll(0, 1000) as $caserne) {
             $villes[$caserne->getNumCaserne()] = $caserne->getVille();
