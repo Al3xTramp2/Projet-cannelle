@@ -205,4 +205,39 @@ class DAOUser extends DAO
         $user = $preparedStatement->fetchObject(User::class);
         return $user ?: null;
     }
+
+    /**
+     * Save a password hash in the history of the user
+     * @param int $IdUser
+     * @param string $PasswordHash
+     * @return bool
+     */
+    public function addPasswordHistory(int $IdUser, string $PasswordHash): bool
+    {
+        $sql = "INSERT INTO password_history (IdUser, PasswordHash) VALUES (:IdUser, :PasswordHash);";
+
+        $preparedStatement = $this->pdo->prepare($sql);
+        $preparedStatement->bindValue("IdUser", $IdUser, PDO::PARAM_INT);
+        $preparedStatement->bindValue("PasswordHash", $PasswordHash, PDO::PARAM_STR);
+
+        return $preparedStatement->execute();
+    }
+
+    /**
+     * Return the most recent password hashes of the user, newest first
+     * @param int $IdUser
+     * @param int $limit
+     * @return string[]
+     */
+    public function findPasswordHistory(int $IdUser, int $limit): array
+    {
+        $sql = "SELECT PasswordHash FROM password_history WHERE IdUser = :IdUser ORDER BY IdHistory DESC LIMIT :limit;";
+
+        $preparedStatement = $this->pdo->prepare($sql);
+        $preparedStatement->bindValue("IdUser", $IdUser, PDO::PARAM_INT);
+        $preparedStatement->bindValue("limit", $limit, PDO::PARAM_INT);
+        $preparedStatement->execute();
+
+        return $preparedStatement->fetchAll(PDO::FETCH_COLUMN);
+    }
 }

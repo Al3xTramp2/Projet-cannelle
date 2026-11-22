@@ -7,6 +7,7 @@
 //echo "<pre>" . print_r($_SERVER, true) . "<pre>";
 require_once '../vendor/autoload.php';
 
+use Supalta\Cannelle\controller\AccountController;
 use Supalta\Cannelle\controller\AuthController;
 use Supalta\Cannelle\controller\CaserneController;
 use Supalta\Cannelle\controller\PompierController;
@@ -68,6 +69,16 @@ switch ($control) {
         }
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
             caserneRoutes_post($fragments);
+        }
+        break;
+    }
+    case "compte" :
+    {
+        if ($_SERVER["REQUEST_METHOD"] == "GET") {
+            accountRoutes_get($fragments);
+        }
+        if ($_SERVER["REQUEST_METHOD"] == "POST") {
+            accountRoutes_post($fragments);
         }
         break;
     }
@@ -178,6 +189,32 @@ function userRoutes_post($fragments): void
             break;
         case "delete" :
             call_user_func_array([new UserController(), "doDelete"], $fragments);
+            break;
+        default:
+            echo "Action '$action' non defini <hr>";
+            break;
+    }
+}
+
+function accountRoutes_get($fragments): void
+{
+    $action = array_shift($fragments);
+    switch ($action) {
+        case "motdepasse" :
+            call_user_func_array([new AccountController(), "password"], $fragments);
+            break;
+        default:
+            echo "Action '$action' non defini <hr>";
+            break;
+    }
+}
+
+function accountRoutes_post($fragments): void
+{
+    $action = array_shift($fragments);
+    switch ($action) {
+        case "motdepasse" :
+            call_user_func_array([new AccountController(), "doPassword"], $fragments);
             break;
         default:
             echo "Action '$action' non defini <hr>";

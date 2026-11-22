@@ -33,6 +33,7 @@
                 </li>
                 @endif
             </ul>
+            <a class="btn btn-outline-light me-2" href="/compte/motdepasse">Mot de passe</a>
             <a class="btn btn-outline-light" href="/auth/logout">Déconnexion</a>
         </div>
     </div>

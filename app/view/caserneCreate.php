@@ -22,6 +22,7 @@
                 <li class="nav-item"><a class="nav-link" href="/user/liste">Utilisateurs</a></li>
                 @endif
             </ul>
+            <a class="btn btn-outline-light me-2" href="/compte/motdepasse">Mot de passe</a>
             <a class="btn btn-outline-light" href="/auth/logout">Déconnexion</a>
         </div>
     </div>

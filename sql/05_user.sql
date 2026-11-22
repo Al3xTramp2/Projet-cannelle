@@ -1,6 +1,8 @@
 USE `pompiersdb`;
 
+DROP TABLE IF EXISTS `password_history`;
 DROP TABLE IF EXISTS `user`;
+
 ;
 CREATE TABLE `user` (
   `IdUser` int(4) NOT NULL,
@@ -17,6 +19,16 @@ CREATE TABLE `user` (
   UNIQUE KEY `Mail` (`Mail`),
   UNIQUE KEY `MatriculePompier` (`MatriculePompier`),
   CONSTRAINT `FK_Pompier4` FOREIGN KEY (`MatriculePompier`) REFERENCES `pompiers` (`Matricule`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+CREATE TABLE `password_history` (
+    `IdHistory` int(11) NOT NULL AUTO_INCREMENT,
+    `IdUser` int(4) NOT NULL,
+    `PasswordHash` varchar(255) NOT NULL,
+    `DateChange` datetime NOT NULL DEFAULT current_timestamp(),
+    PRIMARY KEY (`IdHistory`),
+    KEY `FK_User1` (`IdUser`),
+    CONSTRAINT `FK_User1` FOREIGN KEY (`IdUser`) REFERENCES `user` (`IdUser`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 INSERT INTO `user` VALUES
