@@ -21,6 +21,8 @@ class LoggedPDO extends PDO
         if (!$statement) {
             return false;
         }
-        return new LoggedPDOStatement($statement, SingletonLogger::getInstance()->getSQLLogger(), 'toto');
+        $idUser = Auth::getIdUser();
+        $user = $idUser === 0 ? 'anonymous' : (string) $idUser;
+        return new LoggedPDOStatement($statement, SingletonLogger::getInstance()->getSQLLogger(), $user);
     }
 }

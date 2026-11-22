@@ -34,10 +34,10 @@ class Auth
         $daoUser = new DAOUser($pdo);
         $user = $daoUser->findByLogin($log);
 
-        if ($user === null) {
-            return null;
-        }
-        if (!password_verify($password, $user->getPasswordHash())) {
+        if ($user === null || !password_verify($password, $user->getPasswordHash())) {
+            SingletonLogger::getInstance()
+                ->getAccessLogger()
+                ->warning('Connexion échouée', ['login' => $log]);
             return null;
         }
         if (session_status() !== PHP_SESSION_ACTIVE && !session_start()) {
@@ -84,6 +84,19 @@ class Auth
         }
 
         return isset($_SESSION['auth']['idUser']);
+    }
+
+    /**
+     * Return the id of the logged user, or 0
+     * @return int
+     */
+    public static function getIdUser(): int
+    {
+        if (!self::isLogged()) {
+            return 0;
+        }
+
+        return $_SESSION['auth']['idUser'];
     }
 
     /**
