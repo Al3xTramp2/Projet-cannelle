@@ -49,7 +49,7 @@
         "phpstan": "./vendor/bin/phpstan analyse -l 6 app --error-format table",
         "dockerphpstan": "sudo docker run -it --rm -v $(pwd):/app ghcr.io/phpstan/phpstan analyse -l 6 app --error-format table",
         "phpmetrics": "./vendor/bin/phpmetrics --report-html=storage/phpmetrics/ app",
-        "dbreset": "cat sql/01_structure.sql sql/02_seed_casernes.sql sql/03_seed_pompiers.sql sql/04_safe_delete.sql sql/05_user.sql | mariadb -u root -p",
+        "dbreset": "cat sql/01_structure.sql sql/02_seed_casernes.sql sql/03_seed_pompiers.sql sql/04_safe_delete.sql sql/05_user.sql | mariadb -u pompiersdb_user -p",
         "phpmd": "./vendor/bin/phpmd analyze app --format text --reportfile-html storage/phpmd.html",
         "phpdoc": "php phpDocumentor.phar run -d app -t storage/docs --cache-folder storage/phpdoc-cache --title Cannelle",
         "phpunit": "./vendor/bin/phpunit --color=always tests ; exit 0"

@@ -31,7 +31,7 @@ class BaseController
             return true;
         }
         http_response_code(403);
-        echo Renderer::render("error", ['message' => "Acces refuse"]);
+        echo Renderer::render("error", ['message' => "Accès refusé"]);
         return false;
     }
 }
